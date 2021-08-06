@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="project-disc">
+    <img class = "project-img" src="{{projectObj.featured_image.url}}" alt="">
+    <h1>{{projectObj.title}}</h1>
+    {% for tag in projectObj.tags.all %}
+    <span style = "border: 1px solid grey">{{tag}}</span>
+    {%endfor%}
+    <p>{{projectObj.discription}}</p>
+</div>
+
+
+{% endblock content %}
+    

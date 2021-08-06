@@ -1,0 +1,97 @@
+.colored-section{
+    background-color: #343a40;
+    color: #fff;
+  }
+  
+  .navbar-brand{
+    font-family: 'Ubuntu';
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  .navbar{
+    padding-bottom: 2px;
+    background-color: #B26500;
+  }
+  .nav-item{
+    padding: 2px 18px;
+    box-sizing: border-box;
+    align-items: center;
+  }
+  .nav-link{
+    font-size: 1.3rem;
+    font-family: 'Montserrat-light';
+  }
+  
+  
+  /* Devloper */
+  /* h2{
+    text-align: center;
+  }
+  .header{
+    text-align: center;
+    background-color: #343a40;
+    color: #fff;
+    padding-bottom: 20px;
+    position: relative;
+  }
+  #searchform{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  #formInputsearch{
+    min-width: 2.4rem;
+    padding: 1.2rem 1.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid;
+    background-color: #fff;
+    font-size: 18pt;
+    height: 10px;
+    width: 500px;
+  }
+  
+  .download-button:hover{
+    opacity: 0.85;
+  }
+  .btn-sm {
+      font-size: 1.8rem;
+      padding: 0rem 2.5rem;
+      font-family: 'Montserrat-light';
+      background-color: #8b8b8b;
+      color: #fff;
+      border-radius: 0.5rem;
+      display: inline-block;
+      cursor: pointer;
+  } */
+  
+  
+  .hero-section {
+      height: 40vh;
+      display: flex;
+      align-items: center;
+      background-color: #343a40;
+  }
+  
+  .text-center {
+      text-align: center;
+  }
+  * {
+      font-family: var(--font-base);
+  }
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      text-rendering: optimizeLegibility;
+      color: inherit;
+      font-size: inherit;
+  }
+  .container-padding {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-right: auto;
+    margin-left: auto;
+  }

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>This is a landing page</h1>
+
+<table>  
+    <tr>
+
+        <th>Title</th>
+        <th>Votes</th>
+        <th>Positive</th>
+        <th>Date Created</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr> 
+    {%for data in projectdetails %}
+    <tr>
+        <td>{{data.title}}</td>
+        <td>{{data.total_vote}}</td>
+        <td>{{data.vote_ratio}}%</td>
+        <td>{{data.date_created}}</td>
+        <td><a href="{% url 'edit-project' data.id %}">Edit</a></td>
+        <td><a href="{% url 'delete-project' data.id %}">Delete</a></td>
+        <td><a href="{% url 'projects' data.id %}">view</a></td>
+    </tr>
+    {%endfor%}
+    
+
+</table>
+<hr>
+
+{% endblock content %}
+

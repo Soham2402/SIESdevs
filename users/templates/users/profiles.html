@@ -1,0 +1,34 @@
+{%extends 'base.html'%}
+<!-- Add skills and limit it into 5 skills here  -->
+<!-- limit the discription to 50 chars -->
+{%block content%}
+<h1>This is a landing page</h1>
+
+<table>  
+    <tr>
+
+        <th>Name</th>
+        <th>Username</th>
+        <th>Short Intro</th>
+        <th>Pfp</th>
+        <th>Skills</th>
+
+    </tr> 
+    {%for profiles in profiles %}
+    <tr>
+
+        <td>{{profiles.name}}</td>
+        <td><a href="{% url 'user-profile' profiles.pk %}">{{profiles.username}}</a></td>
+        <td><a href="{% url 'user-profile' profiles.pk %}">{{profiles.short_intro}}</a></td>
+        <td><a href="{% url 'user-profile' profiles.pk %}"><img width="50px" src="{{profiles.profile_image.url}}" alt=""></a></td>
+        <td><a href="{% url 'user-profile' profiles.pk %}">{{profiles.short_intro}}</a></td>
+        <td><a href="{% url 'user-profile' profiles.pk %}">{{profiles.id}}</a></td>
+
+
+    </tr>
+    {%endfor%}
+    
+
+</table>
+<hr>
+{%endblock content%}
