@@ -1,7 +1,30 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate
 from .models import Profile,Skills
-def profiles(request):
 
+def loginPage(request):
+    if request.method == 'POST':
+        username = request.POST['Username']
+        password = request.POST['Password']
+
+        try:
+            user = User.objects.get(username = username)
+        except:
+            print("Username or password does not exist")
+
+        user = authenticate(request, username = username,password = password)
+
+        if user is not None:
+            login(request,user)
+            return redirect("profiles")
+
+        else:
+            print("Username or password does not exist")
+
+    return render(request, "users/login.html")
+
+def profiles(request):
     profiles = Profile.objects.all()
     skills = Skills.objects.all()
 
