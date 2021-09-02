@@ -1,34 +1,126 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- <style>
 
+.project-container{
+    margin-top: 50px;
+    display: flex;
+    justify-content: end;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+.project-card{
+    max-width: 300px;
+}
+.project-card h2{
+    font-size:20px;
+    color:red;
+}
+</style>
+<form action="{% url 'project' %}" method="get">
+    <input type="search" name="search_query" placeholder = "Enter name of project" value = '{{search_query}}'>
+    <input type="submit" value="submit">
+</form>
 
-<table>  
-    <tr>
-
-        <th>Title</th>
-        <th>Votes</th>
-        <th>Positive</th>
-        <th>Date Created</th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr> 
-    {%for data in projectdetails %}
-    <tr>
-        <td>{{data.title}}</td>
-        <td>{{data.total_vote}}</td>
-        <td>{{data.vote_ratio}}%</td>
-        <td>{{data.date_created}}</td>
-        <td><a href="{% url 'edit-project' data.id %}">Edit</a></td>
-        <td><a href="{% url 'delete-project' data.id %}">Delete</a></td>
-        <td><a href="{% url 'projects' data.id %}">view</a></td>
-    </tr>
+<div class="project-container">
+ {%for project in projectdetails%}
+    <a href="{% url 'projects' project.id%}">
+        <div class="project-card">
+            <img width="300px" src="{{project.featured_image.url}}" alt="">
+            <h1>{{project.title}}</h1>
+            <h2>{{project.owner}}</h2>
+            <p>{{project.discription|slice:"150"}}</p>
+        </div>
+    </a>
     {%endfor%}
-    
+</div> -->
 
-</table>
-<hr>
+<style>
+
+a{
+    text-decoration: none;
+    color: black;
+    }
+a:hover{
+    text-decoration: none;
+}
+.project-section{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(auto-fill, 300px);    
+    margin: 5% 15% 5% 15%;
+    gap: 2em;
+}
+.project-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color:  rgb(237, 237, 253);
+    border-radius: 10px;
+    max-width: 300px;
+
+}
+.project-img{
+    max-width: 300px;
+    border-radius: 10px;
+}
+.project-title{
+    font-size: 110%;
+    padding: 10px 15px;
+    font-size: 27px;
+    font-weight: 500;
+}
+.project-auth{
+    margin-top: -15px;
+    padding: 10px 15px;
+    font-size: 15px;
+    font-style: italic;
+    color: teal;
+}
+.vote{
+    padding: 10px 15px;
+}
+</style>
+
+
+<section class="hero-section text-center">
+    <div class="container-fluid container--narrow">
+      <div class="hero-section__box">
+        <h2><span>Search student projects</span></h2>
+        <h2></h2>
+      </div>
+
+      <div class="hero-section__search">
+
+        <form id="searchForm" class="form" action="{%url 'project'%}" method="get">
+          <div class="form__field">
+            <input class="input input--text" id="formInput#search" type="text" name="search_query" value="{{search_query}}" placeholder="Search by project name">
+          </div>
+
+          <input class="btn btn--sub btn--lg" type="submit" value="Search">
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+<section class="project-section">
+        {%for project in projectdetails%}
+        <a href="{%url 'projects' project.id%}">
+            <div class="project-card">
+                <img src="{{project.featured_image.url}}" alt="" class="project-img" >
+                <p class="project-title">{{project.title}}</p>
+                <h5 class="project-auth">by {{project.owner}}</h5>
+                <h4 class="vote">{{project.vote_ratio}}% positive feedback</h4>
+            </div>
+        </a>
+        {%endfor%}
+</section>
+
+{% include "pagination.html" with queryset=projectdetails custom_range=custom_range%}
 
 {% endblock content %}
 

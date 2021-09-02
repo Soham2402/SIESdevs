@@ -2,32 +2,65 @@
 <!-- Add skills and limit it into 5 skills here  -->
 <!-- limit the discription to 50 chars -->
 {%block content%}
+{% comment %} <form action="{% url 'profiles' %}" method="get">
+    <input type="search" name="search_query" placeholder = "Enter name of user" value = '{{search_query}}'>
+    <input type="submit" value="submit">
+</form> {% endcomment %}
 
-<table border="1px" style="margin: 20px;">  
-    <tr>
+<section class="hero-section text-center">
+    <div class="container-fluid container--narrow">
+      <div class="hero-section__box">
+        <h2>CONNECT WITH <span>DEVELOPERS</span></h2>
+        <h2>FROM SIES COLLEGE.</h2>
+      </div>
 
-        <th>Name</th>
-        <th>Username</th>
-        <th>Short Intro</th>
-        <th>Pfp</th>
-        <th>Skills</th>
+      <div class="hero-section__search">
 
-    </tr> 
+        <form id="searchForm" class="form" action="{%url 'profiles'%}" method="get">
+          <div class="form__field">
+            <input class="input input--text" id="formInput#search" type="text" name="search_query" value="{{search_query}}" placeholder="Search by developer name">
+          </div>
+
+          <input class="btn btn--sub btn--lg" type="submit" value="Search">
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="white-section" id="profile">
+
+    <div class="row">
     {%for profiles in profiles %}
-    <tr>
+    <div class="profile-column col-lg-4 col-md-6">
+        <div class="card">
+            <a href="{% url 'user-profile' profiles.id %}" class="link">
+          <div class="card-header">
+            <div class="dev_profile">
+              <img class="avatar avatar--md" src="{{ profiles.profile_image.url }}" alt="image">
+              <h3>{{profiles.name}}</h3>
+              <h5>{{profiles.username}}</h5>
+            </div>
+          </div>
 
-        <td>{{profiles.name}}</td>
-        <td><a href="{% url 'user-profile' profiles.pk %}">{{profiles.username}}</a></td>
-        <td><a href="{% url 'user-profile' profiles.pk %}">{{profiles.short_intro}}</a></td>
-        <td><a href="{% url 'user-profile' profiles.pk %}"><img width="50px" src="{{profiles.profile_image.url}}" alt=""></a></td>
-        <td><a href="{% url 'user-profile' profiles.pk %}">{{profiles.short_intro}}</a></td>
-        <td><a href="{% url 'user-profile' profiles.pk %}">{{profiles.id}}</a></td>
+          <div class="card-body">
+            <p>{{profiles.short_intro}}</p>
 
+            <div class="dev__skills">
+            {%for skill in profiles.skills_set.all%}
+              <span class="tag tag--pill tag--main">
+                <small class= "skill-tag">{{skill.name}}</small>
+              </span>
+            {%endfor%}
+            </div>
 
-    </tr>
-    {%endfor%}
-    
+          </div>
+        </a>
+        </div>
+      </div>
+      {%endfor%}
+    </div>
 
-</table>
-<hr>
+  </section>
+  {% include 'pagination.html' with queryset=profiles custom_range=custom_range %}
 {%endblock content%}

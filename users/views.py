@@ -1,8 +1,13 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate,logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile,Skills
+from django.db.models import Q 
+from .forms import editProfile, skillForm
+from django.core.paginator import Paginator
+from .utils import searchProfiles,paginateDevs
 
 def loginUser(request):
     if request.user.is_authenticated:
@@ -26,16 +31,19 @@ def loginUser(request):
     return render(request, "users/login.html")
     
 
+
 def logoutUser(request):
     logout(request)
     messages.success(request, "Log out successfull")
     return redirect("profiles")
 
-def profiles(request):
-    profiles = Profile.objects.all()
-    skills = Skills.objects.all()
 
-    context = {'profiles':profiles,'skills':skills}
+def profiles(request):
+
+    search_query, profiles = searchProfiles(request)
+    custom_range, profiles = paginateDevs(request,profiles,6) 
+
+    context = {'profiles':profiles,'search_query':search_query,'custom_range':custom_range}
     return render(request, 'users/profiles.html',context)
 
 
@@ -44,10 +52,71 @@ def userProfile(request,pk):
     profile = Profile.objects.get(id=pk)
     topSkills = profile.skills_set.exclude(discription__exact = "")
     otherSkills = profile.skills_set.filter(discription = "")
-    context = {'profile':profile,'topSkills':topSkills,'otherSkills':otherSkills}
+    projects = profile.project_set.all()
+    context = {'profile':profile,'topSkills':topSkills,'otherSkills':otherSkills,"project":projects}
     return render(request,'users/user-profile.html',context)
 
-# def userProf(request,pk):
-#     profile = Profile.objects.get(id=pk)
-#     context = {'profile':profile}
-#     return render(request,'users/user-profile.html',context)
+
+@login_required(login_url="login")
+def userAccount(request):
+    profile = request.user.profile
+    Skills = profile.skills_set.all()
+    project = profile.project_set.all()
+    context = {"profile":profile,"skills":Skills,"project":project}
+    return render(request,'users/user-account.html',context)
+
+
+@login_required(login_url="login")
+def editAccount(request):
+    profile = request.user.profile
+    form = editProfile(instance = profile)
+    
+    if request.method == "POST":
+        form = editProfile(request.POST,request.FILES,instance = profile)
+        if form.is_valid():
+            form.save()
+            return redirect('user-account')
+    context = {"form":form}
+    return render(request,"users/edit-account.html",context)
+
+
+@login_required(login_url="login")
+def createSkill(request):
+    profile = request.user.profile
+    form = skillForm()
+    if request.method == 'POST':
+        form = skillForm(request.POST)
+        if form.is_valid():
+            skill = form.save(commit=False)
+            skill.owner = profile
+            skill.save()
+            return redirect("user-account")
+    context = {"form":form}
+    return render(request,"users/skill-form.html",context)
+
+@login_required(login_url="login")
+def editSkill(request,pk):
+    profile = request.user.profile
+    skillobj = profile.skills_set.get(id = pk)
+    form = skillForm(instance=skillobj)
+
+    if request.method == 'POST':
+        form = skillForm(request.POST,instance=skillobj)
+        if form.is_valid():
+            form.save()
+            return redirect("user-account")
+    context = {"form":form}
+    return render(request,"users/skill-form.html",context)
+
+
+@login_required(login_url="login")
+def deleteSkill(request,pk):
+    profile = request.user.profile
+    skillobj = profile.skills_set.get(id = pk)
+    form = skillForm(instance=skillobj)
+
+    if request.method == 'POST':
+            skillobj.delete()
+            return redirect("user-account")
+    context = {"form":form,"object":skillobj}
+    return render(request,"delete_template.html",context)

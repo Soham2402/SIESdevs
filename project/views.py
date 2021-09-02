@@ -1,32 +1,20 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Project
+from .models import Project,Tags
 from .forms import ProjectForm
-
-# projectdetails = [
-#     {'id':'1',
-#     'title':'E-Commerce website',
-#     'discription':"This is a fully functioning ecommerce website"
-#     }, 
-    
-#     {'id':'2',
-#     'title':'Social media website',
-#     'discription':"This is a fully functioning social media website"
-#     },
-
-#     {'id':'3',
-#     'title':'Portfolio website',
-#     'discription':"This is a fully functioning portfolio website"
-#     }
-
-# ]
-
-
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
+from .utils import searchProject, paginateProject
 def project(request):
-    Projects = Project.objects.all()
-    context = {'projectdetails':Projects}
+    
+    search_query, projects = searchProject(request)
+    custom_range,projects = paginateProject(request,projects,6)
+
+    context = {'projectdetails':projects,'search_query':search_query,"custom_range":custom_range}
     return render(request,'project/projects.html',context)
+
+
 
 def projects(request,pk):
     projectObj = Project.objects.get(id = pk)
@@ -64,4 +52,4 @@ def deletePost(request,pk):
         projectObj.delete()
         return redirect('project')
     context = {'form':form}
-    return render(request,'project/delete_template.html',context)
+    return render(request,'delete_template.html',context)

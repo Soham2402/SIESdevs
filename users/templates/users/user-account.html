@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% load static %}
+ 
+  <!-- Main Section -->
+{% block content %}
+<style>
+.body{
+    margin:0;
+}
+.container{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+    align-content: space-between;
+    justify-content: start;
+}
+.link-text{
+    color: black;
+    
+}
+.link-text:hover{
+    text-decoration:none;
+}
+.info-card{
+    display: flex;
+    flex-direction: column;
+    background-color: antiquewhite;
+    padding: 10px;
+    align-items: center;
+}
+.info-card h3 {
+    font-size: 20px;
+}
+.info-card p {
+    border: 2px solid aqua;
+    padding: 6px;
+    background-color: aquamarine;
+    border-radius: 16px;
+    
+}
+.skills{
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+.add-skill{
+    border: 2px antiquewhite solid;
+    padding: 7px 14px;
+    text-align: center;
+    border-radius: 8px;
+}
+.add-skill:hover{
+    background-color: blanchedalmond;
+    transition: 0.2s ease-in;
+    cursor: pointer;
+}
+.project-container{
+    margin-top: 50px;
+    display: flex;
+    justify-content: end;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+.project-card{
+    background-color: blanchedalmond;
+    max-width: 300px;
+    border-radius: 16px;
+    padding: 8px;
+}
+.edit-delete-project{
+    display: flex;
+    align-items: stretch;
+    justify-content: space-evenly;
+
+}
+.edit-project, .delete-project{
+    text-decoration: none;
+    border: 2px rgba(159, 159, 233, 0.767) solid;
+    border-radius: 6px;
+    color: black;
+    padding: 8px 16px;
+}
+.project-img{
+    align-self: flex-start;
+    max-width: 290px;
+}
+</style>
+<div class="container">
+    <div class="info-card">
+        <a href="{% url 'edit-account'%}"><p>Edit Account</p></a>
+        <img width="300px" src="{{profile.profile_image.url}}" alt=""><br>
+        <h1>{{profile.name}}</h1><br>
+        <h3>{{profile.short_intro}}</h3><br>
+    </div>
+
+    <div class="other-info">
+        <h2>{{profile.username}}</h2><br>
+        <h4>{{profile.bio}}</h4><br>
+
+        <h1>SKILLS</h1>
+        {%for skill in skills%}
+        <span class="skills">
+            <small class="tag">{{skill}}</small>
+            <small>{{skill.discription}}</small>
+            <a href="{% url 'edit-skill' skill.id %}"><small class="edit-btn">Edit</small>
+            </span></a>
+            <a href="{% url 'delete-skill' skill.id %}?next=/user-account"><small class="edit-btn">Delete</small>
+            </span></a>
+        {%endfor%}
+
+        <div class="add-skill"> 
+            <a href="{% url 'create-skill' %}" class="link-text">Add Skill</a>
+        </div>
+        
+    </div>
+</div>
+
+<div class="project-container">
+ {%for project in project%}
+    <div class="project-card">
+        <img width="300px" class = "project-img" src="{{project.featured_image.url}}" alt="">
+        <h1>{{project.title}}</h1>
+        <p>{{project.discription|slice:"150"}}</p>
+        <div class="edit-delete-project">
+            <a href="{%url 'edit-project' project.id%}" class="edit-project">Edit</a>
+            <a href="{%url 'delete-project' project.id%}?next=/user-account" class="delete-project">Delete</a>
+        </div>
+    </div>
+    {%endfor%}
+</div>
+
+    
+
+
+{% endblock  %}

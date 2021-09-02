@@ -1,52 +1,25 @@
-*{
-  
-}
 .colored-section{
-  background-color:hsl(24, 70%, 58%);
+  background-color: #343a40;
 }
 
-input{
-  outline: 0;
-  appearance: none;
-}
 .navbar-brand{
   font-family: 'Ubuntu';
   font-size: 2.5rem;
   font-weight: bold;
-  color: black;
 }
 .navbar{
-  background-color:  hsl(24, 70%, 58%);
   padding-bottom: 2px;
 }
 .nav-item{
   padding: 2px 18px;
   box-sizing: border-box;
   align-items: center;
-  color: black;
 }
 .nav-link{
-  font-size: 1rem;
-  font-family:sans-serif;
-  color: white  ;
-  text-transform: uppercase;
-}
-.logo{
-  color: white;
+  font-size: 1.3rem;
+  font-family: 'Montserrat-light';
 }
 
-.log{
-  background-color: rgb(48, 23, 2);
-  padding: 6px 12px;
-  border-radius: 12px;
-  color: white;
-  border:none;
-  outline: none;
-  appearance: none;
-}
-.log:hover{
-  cursor: pointer;
-}
 
 /* Devloper */
 h2{
@@ -56,8 +29,7 @@ h2{
     height: 40vh;
     display: flex;
     align-items: center;
-    /* background-colorgb(143, 165, 187)a40; */
-    background-color:  hsl(24, 70%, 58%);
+    background-color: #343a40;
 }
 
 .text-center {
@@ -95,7 +67,7 @@ h2{
 
 }
 .btn--sub{
-    background-color: rgb(48, 23, 2);
+    background-color: #51546e;
     color: #ffff;
 }
 .btn--lg  {
@@ -144,18 +116,4 @@ h2{
 .projects > .hero-section {
     background: var(--color-sub-lighter);
     height: 30vh;
-}
-.skill-tag{
-  border: 1px hsl(29, 88%, 48%) solid;
-  border-radius: 6px;
-  padding: 2px 4px;
-}
-.link{
-  text-transform: none;
-  text-decoration: none;
-  color: black;
-}
-.link:hover{
-  text-transform: none;
-  text-decoration: none;
 }

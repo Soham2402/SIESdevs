@@ -2,16 +2,107 @@
 
 {%block content%}
 
+ <style>
+.body{
+    margin:0;
+}
+.container{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+    align-content: space-between;
+    justify-content: start;
+}
+.info-card{
+    display: flex;
+    flex-direction: column;
+    background-color: antiquewhite;
+    padding: 10px;
+    align-items: center;
+}
+.info-card h3 {
+    font-size: 20px;
+}
+.info-card p {
+    border: 2px solid aqua;
+    padding: 6px;
+    background-color: aquamarine;
+    border-radius: 16px;
+    
+}
+.top-skills{
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+.other-skills{
+    border: 2px red solid;
+    flex-direction: row;
+    flex-basis: 0;
+    margin-right: 20px;
+}
+.project-container{
+    margin-top: 50px;
+    display: flex;
+    justify-content: end;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 50px;
+    text-decoration: none;
+}
+.project-card{
+    max-width: 300px;
+}
 
+</style>
+<div class="container">
+    <div class="info-card">
+        <a href="{% url 'edit-account'%}"><p>Edit Account</p></a>
+        <img width="300px" src="{{profile.profile_image.url}}" alt=""><br>
+        <h1>{{profile.name}}</h1><br>
+        <h3>{{profile.short_intro}}</h3><br>
+    </div>
 
-    <img width="300px" src="{{profile.profile_image.url}}" alt=""><br>
-    <h1>{{profile.name}}</h1><br>
-    <h2>{{profile.username}}</h2><br>
-`   <h3>{{profile.short_intro}}</h3><br>
-    <h4>{{profile.bio}}</h4><br>
+    <div class="other-info">
+        <h2>{{profile.username}}</h2><br>
+        <h4>{{profile.bio}}</h4><br>
 
+        <h1>TOP SKILLS</h1>
+        {%for skill in topSkills%}
+        <span class="top-skills">
+            <small class="tag">{{skill}}</small>
+            <small>{{skill.discription}}</small>
+        </span>
+        {%endfor%}
 
- 
+        <h1>OTHE SKILLS</h1>
+        {%for skill in otherSkills%}
+        <span class="other-skills">
+                {{skill}}
+        </span>
+        {%endfor%}
+
+        
+
+        
+    </div>
+</div>
+
+<div class="project-container">
+ {%for project in project%}
+    <a href="{% url 'projects' project.id %}">
+        <div class="project-card">
+            <img width="300px" src="{{project.featured_image.url}}" alt="">
+            <h1>{{project.title}}</h1>
+            <p>{{project.discription|slice:"150"}}</p>
+        </div>
+    </a>
+    {%endfor%}
+</div>
+
+    
+
 
     
 
