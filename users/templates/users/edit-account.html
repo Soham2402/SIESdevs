@@ -2,15 +2,19 @@
 
 {% block content  %}
 
-
-
+<style>
+    .form-cont{
+        margin: 5% 5%;
+    }
+</style>
+<section class = "form-cont">
 <form action="{% url 'edit-account' %}" method="POST" enctype="multipart/form-data">
 {%csrf_token%}
+
 {{form.as_p}}
-<input type="submit">
-
+<input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
 </form>
-
+</section>
 {% endblock  %}
 
 

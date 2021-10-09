@@ -2,15 +2,102 @@
 
 {% block content %}
 
-<div class="project-disc">
+
+<style>
+
+</style>
+
+<div class="project-parent">
+    <div class="canvas">
+        <section class="left-side">
+
+            <h1>Links</h1>
+            <div><a href="{{project.demo_link}}" class="user-project-link-tag">Demo Link</a></div>
+            <div><a href="{{project.source_link}}" class="user-project-link-tag">Source Code</a></div>
+
+        </section>
+
+        <section class="right-side">
+            <h1>{{projectObj.title}}</h1>
+            <img src="{{projectObj.featured_image.url}}" alt="" class="project-img">
+            <p> <a href="{% url 'user-profile' projectObj.owner.id %}" class="user-project-link-tag">By {{projectObj.owner.name}}</a> </p>
+            <section class="technologies">
+                <h1>Technologies</h1>
+                {% for tags in projectObj.tags.all %}  
+                <span class="tag tag--pill tag--main">
+                    <span class= "skill-tag">{{tags}}</span>
+                </span>
+                {% endfor %}    
+            </section>
+            <article class="discription"> 
+                <h1>Discription</h1>
+                <p>{{projectObj.discription}}</p>
+            </article>
+        </section>
+    </div>
+
+    <section class="reviews">
+        <h2>Reviews</h2>
+         <h4 class="vote">{{projectObj.vote_ratio}}% positive feedback ({{projectObj.total_vote}} Vote{{project.vote_total|pluralize:"s"}})</h4>
+        {% if request.user.profile.id in projectObj.UserId %}
+            <h4 class="prompt">You have already reviewed this work</h4>
+    
+        {% elif request.user.profile.id == projectObj.owner.id %}
+            <h4 class="prompt">Authors cannot review their own work</h4>
+    
+        {% elif request.user.is_authenticated %}
+            <form action="{% url 'projects' projectObj.id %}" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}?next={{request.path}}" class="user-project-link-tag">You need to login to add a review</a>
+        {% endif %}
+            {% for review in projectObj.review_set.all %}
+            <div class="comments">
+                <a href="{% url 'user-profile' projectObj.owner.id %}" class="undecor-link">
+                    <img src="{{review.owner.profile_image.url }}" alt="" class="review-img">
+                    <span class="reviewer-name">{{review.owner.name}}:</span>
+                </a>
+                <p class="review-body">{{review.body}}</p>
+            </div>
+        {% endfor %}
+    </section>
+
+
+</div>
+
+<!-- <div class="project-disc">
     <img class = "project-img" src="{{projectObj.featured_image.url}}" alt="">
     <h1>{{projectObj.title}}</h1>
-    {% for tag in projectObj.tags.all %}
-    <span style = "border: 1px solid grey">{{tag}}</span>
-    {%endfor%}
     <p>{{projectObj.discription}}</p>
 </div>
 
+<section class="reviews">
+
+    {% if request.user.profile.id in projectObj.UserId %}
+        <p>You have already reviewed this work</p>
+
+    {% elif request.user.profile.id == projectObj.owner.id %}
+        <p>Authors cannot review their own work</p>
+
+    {% elif request.user.is_authenticated %}
+        <form action="{% url 'projects' projectObj.id %}" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Submit">
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}?next={{request.path}}">You need to login to add a review</a>
+    {% endif %}
+        {% for review in projectObj.review_set.all %}
+        <div class="comments">
+            <h4>{{review.owner.name}}</h4>
+            <p>{{review.body}}</p>
+        </div>
+    {% endfor %}
+</section> -->
 
 {% endblock content %}
     

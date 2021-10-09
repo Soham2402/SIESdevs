@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .form-cont{
+        margin: 5% 5%;
+    }
+</style>
+
+<section class = "form-cont">
+<form action="" method="POST">
+    {% csrf_token %}
+    {% if request.user.is_authenticated == False %}
+      {{form.name.label}}
+      {{form.name}}
+      <br>
+      {{form.email.label}}
+      {{form.email}}
+      <br>
+    {% endif %}
+        {{form.subject.label}}
+        {{form.subject}}
+        <br>
+        {{form.body.label}}
+        {{form.body}}
+    <input type="submit" value="Send!">
+</form>
+</section>
+
+{% endblock  %}

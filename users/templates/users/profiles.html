@@ -2,11 +2,12 @@
 <!-- Add skills and limit it into 5 skills here  -->
 <!-- limit the discription to 50 chars -->
 {%block content%}
+
+</style>
 {% comment %} <form action="{% url 'profiles' %}" method="get">
     <input type="search" name="search_query" placeholder = "Enter name of user" value = '{{search_query}}'>
     <input type="submit" value="submit">
 </form> {% endcomment %}
-
 <section class="hero-section text-center">
     <div class="container-fluid container--narrow">
       <div class="hero-section__box">
@@ -63,4 +64,5 @@
 
   </section>
   {% include 'pagination.html' with queryset=profiles custom_range=custom_range %}
+
 {%endblock content%}

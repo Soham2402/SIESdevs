@@ -14,31 +14,33 @@ a:hover{
     padding: 6px 12px;
     border-radius: 6px;
     color:white ;
+    margin-bottom: 2em;
 }
 .pag-btn-on{
     background-color: hsl(27, 91%, 34%);
     padding: 7px 14px;
     border-radius: 6px;
-    color:white ;
+    color:white;
+    margin-bottom: 2em;
 }
 </style>
 
 <div class="pagination">
 
     {% if queryset.has_previous %}
-        <a href="?page={{queryset.previous_page_number}}" class="pag-btn">Prev</a>
+        <a href="?page={{queryset.previous_page_number}}" class="pag-btn page-link" data-page ="{{queryset.previous_page_number}}">Prev</a>
     {% endif %}
 
     {% for page in custom_range %}
         {% if page == queryset.number %}
-            <a href="?page={{page}}" class="pag-btn-on">{{page}}</a>
+            <a href="?page={{page}}" class="pag-btn-on page-link" data-page ="{{page}}">{{page}}</a>
         {%else%}
-            <a href="?page={{page}}" class="pag-btn">{{page}}</a>
+            <a href="?page={{page}}" class="pag-btn page-link" data-page ="{{page}}">{{page}}</a>
         {% endif %}
     {% endfor %}
 
     {% if queryset.has_next %}
-        <a href="?page={{queryset.next_page_number}}" class="pag-btn">Next</a>
+        <a href="?page={{queryset.next_page_number}}" class="pag-btn page-link"  data-page ="{{queryset.next_page_number}}">Next</a>
     {% endif %}
 
 </div>

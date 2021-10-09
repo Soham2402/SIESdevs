@@ -1,15 +1,45 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
+<style>
+    .form-cont{
+        margin: 5% 5%;
+    }
+</style>
 <form action="" method="post">
     {% csrf_token %}
-
+    <section class="form-cont">
     {{form.as_p}}
-
-    <input type="submit" placeholder="Confirm">
+    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Confirm" /> 
+</section>
 
 </form>
 
 
+  <main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a class="backButton" href="profile.html"><i class="im im-angle-left"> ˂ </i></a>
+            <br>
 
+            <form class="form" method="POST" action="">
+             {% csrf_token %}
+                <input type="hidden" name="" value="">
+
+                <div class="form__field">
+                      <label for="formInput#text">{{form.label}}</label>
+                      <input type="text" name="name" maxlength="200" class="input" id="id_name">
+                  </div>
+
+                <div class="form__field">
+                    <label for="formInput#text"> Description</label>
+                    <textarea name="description" cols="40" rows="10" class="input" id="id_description"></textarea>
+                </div>
+
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</main>
 {% endblock  %}

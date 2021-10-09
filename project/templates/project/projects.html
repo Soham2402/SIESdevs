@@ -37,53 +37,7 @@
     {%endfor%}
 </div> -->
 
-<style>
 
-a{
-    text-decoration: none;
-    color: black;
-    }
-a:hover{
-    text-decoration: none;
-}
-.project-section{
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    grid-template-columns: repeat(auto-fill, 300px);    
-    margin: 5% 15% 5% 15%;
-    gap: 2em;
-}
-.project-card{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color:  rgb(237, 237, 253);
-    border-radius: 10px;
-    max-width: 300px;
-
-}
-.project-img{
-    max-width: 300px;
-    border-radius: 10px;
-}
-.project-title{
-    font-size: 110%;
-    padding: 10px 15px;
-    font-size: 27px;
-    font-weight: 500;
-}
-.project-auth{
-    margin-top: -15px;
-    padding: 10px 15px;
-    font-size: 15px;
-    font-style: italic;
-    color: teal;
-}
-.vote{
-    padding: 10px 15px;
-}
-</style>
 
 
 <section class="hero-section text-center">
@@ -109,9 +63,9 @@ a:hover{
 
 <section class="project-section">
         {%for project in projectdetails%}
-        <a href="{%url 'projects' project.id%}">
+        <a href="{%url 'projects' project.id%}" class="undecor-link">
             <div class="project-card">
-                <img src="{{project.featured_image.url}}" alt="" class="project-img" >
+                <img src="{{project.featured_image.url}}" alt="" class="projects-img" >
                 <p class="project-title">{{project.title}}</p>
                 <h5 class="project-auth">by {{project.owner}}</h5>
                 <h4 class="vote">{{project.vote_ratio}}% positive feedback</h4>

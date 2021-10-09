@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.box{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 5% auto 25% auto;
+    background-color: hsl(24, 70%, 58%);
+    border-radius: 12px;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 20px 30px;
+}
+.body{
+    max-width: 75%;
+}
+a{
+  color:black;
+}
+.message__item{
+  font-size: 150%;
+  padding-right: 2em;
+}
+.message{
+  margin-bottom:2em;
+}
+
+</style>
+
+
+    <div class="box">
+      <h3 class="inbox__title">New Messages(<span>{{unread}})</span></h3>
+      <ul class="messages"><br>
+        {% for message in requests  %}
+
+          <li class="message">
+          <a href="{% url 'view-message' message.id %}">
+            <span class="message__item">{{message.name}}</span>
+            <span class="message__item">{{message.subject}}</span>
+            <span class="message__item">{{message.created}}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  
+
+<!-- Main Section -->
+
+
+{% endblock  %}

@@ -1,20 +1,55 @@
 {% extends 'base.html' %}
 
+{%load static%}
 
 
 
 
 {% block content %}
 
-    <form action="{% url 'login' %}" method="post">
+
+    <!-- <form action="" method="post">
 
         {% csrf_token %}
         <input type="text" name="Username" placeholder="Username">
         <input type="password" name="Password" placeholder="Password">
         <input type="submit" name="Login" placeholder="Login">
-      
-    </form>
+        <small><a href="{%url 'reset_password'%}">Forgot password?</a></small>
 
+    </form> -->
+    <main background="{% static 'images/pattern.jpg' %}">
+    <div class="auth">
+        <div class="card">
+            <div class="auth__header text-center">
+                    <img src="{% static 'images/sieslogo.png' %}" alt="icon"  width="150" />
+                <h3>Account Login</h3>
+                <p>Hello Developer, Welcome Back!</p>
+            </div>
+    
+            <form action="" method="POST" class="form auth__form">
+                {% csrf_token %}
+                <input type="hidden" name="" value="">
+    
+                <!-- Input:Username -->
+                <div class="form__field">
+                    <label for="formInput#text">Username: </label>
+                    <input class="input input--text" id="formInput#text" type="text" name="Username" placeholder="Enter your username..." />
+                </div>
+    
+                <!-- Input:Password -->
+                <div class="form__field">
+                    <label for="formInput#password">Password: </label>
+                    <input class="input input--password" id="formInput#passowrd" type="password" name="Password" placeholder="••••••••" />
+                </div>
+    
+                <div class="auth__actions">
+                    <input class="btn btn--sub btn--lg" type="submit" name="Login" value="Log In" />
+                    <a href="{%url 'reset_password'%}">Forget Password?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    </main>
 {% endblock content %}
 
 
