@@ -36,9 +36,12 @@ def updateUser(sender,instance, created, **kwargs):
 
         
 def onDelete(sender,instance,**kwargs):
-    user = instance.user
-    user.delete()
-
+    try:
+        user = instance.user
+        user.delete()
+    except:
+        pass
+    
 post_save.connect(onCreate, sender = User)
 post_save.connect(updateUser,sender = Profile)
 post_delete.connect(onDelete,sender = Profile)

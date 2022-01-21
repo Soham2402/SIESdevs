@@ -17,6 +17,16 @@ class Project(models.Model):
     id = models.UUIDField(default = uuid.uuid4, unique = True, 
                             primary_key = True, editable = False)
 
+  
+    @property
+    def imageURL(self):
+        try:
+            url = self.featured_image.url
+        except:
+            url = '/default.jpg'
+        return url
+
+
     @property
     def UserId(self):
         queryset = self.review_set.all().values_list('owner__id', flat = True)

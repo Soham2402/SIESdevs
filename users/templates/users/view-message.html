@@ -19,8 +19,12 @@
 
 </style>
 <div class="box">
-    <section>{{message.owner.name}}</section>
-    <section class="title"><b>{{message.subject}}</b></section>
+    {% if message.sender %} 
+    <a href = {% url 'user-profile' message.sender.id %}>{{message.sender.name}}</a>
+    {% else %}
+    <section>{{message.sender.name}}</section>
+    {% endif %}
+    <section class="title"><b>{{message.subject}}</b></section> 
     <section class="body">{{message.body}}</section>
     
 </div>

@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Project
+from .models import Project, Tags
 from .forms import ProjectForm,ReviewForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
@@ -39,10 +39,14 @@ def createPost(request):
     profile = request.user.profile
     form = ProjectForm()
     if request.method == 'POST':
+        newtags = request.POST.get("newtags").replace(","," ").split()
         form = ProjectForm(request.POST,request.FILES)
         if form.is_valid():
-            project = form.save(commit=False)
+            project = form.save()
             project.owner = profile
+            for tag in newtags:
+                tag, created = Tags.objects.get_or_create(name = tag)
+                project.tags.add(tag)
             project.save()
         return redirect('project')
     context = {'form':form}
@@ -54,9 +58,16 @@ def editPost(request,pk):
     projectObj = Project.objects.get(id = pk)
     form = ProjectForm(instance=projectObj)
     if request.method == 'POST':
+        newtags = request.POST.get("newtags").replace(","," ").split()
+
         form = ProjectForm(request.POST, request.FILES, instance=projectObj)
+
         if form.is_valid():
-            form.save()
+            project = form.save()
+            for tags in newtags:
+                tags, created = Tags.objects.get_or_create(name = tags)
+                project.tags.add(tags)
+                project.save()
         return redirect('project')
     context = {'form':form}
     return render(request,'project/form_template.html',context)

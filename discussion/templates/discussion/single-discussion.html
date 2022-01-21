@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body{
+    /* background-color:rgba(236, 193, 158, 0.719) ; */
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.5;
+}
+h1,h2,h3{
+    font-size: 1.55em;
+}
+a{
+    color: tomato;
+    text-decoration: none;
+}
+
+.container-box{
+   /* margin: 2em; */
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap:2em;
+   margin: 1em auto;
+   width: 100%
+
+}
+.question-card, .comment-box{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(241, 169, 110, 0.281);
+    margin: 0 auto;
+    width: 70%;
+    border: 0.5px solid  rgba(241, 169, 110, 0.966);
+    padding: 1.5em 3em;
+    gap: 0.8em;
+    border-radius: 16px;
+}
+.comment-box{
+    fwidth: 100%;
+}
+.question-detail{
+    font-size: 1.35em;
+}
+.author_name, .question-section{
+    border-bottom: 0.8px solid rgba(241, 169, 110, 0.966);
+    padding-bottom: 1em;
+}
+.tag-section{
+    align-self: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+}
+.tags{
+    padding: 0.5em 1em;
+    border: 0.8px solid rgba(241, 169, 110, 0.966);
+    border-radius: 16px;
+    text-transform: uppercase;
+    font-weight: 600 ;
+    color: tomato;
+}
+.details{
+    font-size: 1.19em;
+    max-width: 90%;
+    margin:0 auto;
+}
+.discussion_details{
+    line-height: 2.1;
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    /* align-content: center;
+    align-items: center; */
+}
+img{
+    max-width: 100%;
+    align-self: center;
+    justify-self: center;
+}
+ul{
+    align-self: center;
+    justify-self: center;
+}
+.user-info{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.user-img{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    align-self: center;
+}
+.answer-amount{
+    font-size: 1.35em;
+    font-weight: 300;
+}
+
+@media(max-width:630px){
+    .question-card, .comment-box{
+        max-width: 90%;
+    }
+    img{
+        max-width: 100%;
+    }
+}
+</style>
+
+<body>
+
+    <div class="container-box">
+        <section class="question-card">
+            <span class="author_name">By <a href="#">{{post.owner}}</a></a></span>
+            <article class="question-section">
+                <span class="question-title"><h2>{{post.title}}</h2></span>
+                <span class="question-detail">{{post.discription}}</span>
+            </article>
+
+        <article class="details">
+            <div class="discussion_details">{{post.body | safe }}</div>
+        </article>
+
+            <section class="tag-section">
+                {% for tag in post.tags.all %}
+                    <span class="tags">{{tag}}</span>
+                {% endfor %}
+            </section>
+        </section>
+
+    {% if request.user.is_authenticated %}
+    
+    <span class="answer-prompt"><h1>Add your response here</h1></span>
+        <form action="{% url 'single-discussion' post.id %}" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}?next={{request.path}}" class="user-project-link-tag">You need to login to add a review</a>
+    {% endif %}
+
+    <span class="answer-amount">There are 1 responses to this post</span>
+
+    {% for response in post.discreview_set.all %}
+    <div class="comment-container">
+    <section class="comment-box">
+        <span class="user-info">
+            <img  class = "user-img"src="{{response.owner.profile_image.url}}" alt="">
+            <span class="author_name">By <a href="{% url 'user-profile' response.owner.id %}"> {{response.owner.name}}</a></a></span>
+        </span>
+        <div class="answer-content">
+            <div class="discussion_details">{{response.body}}</div>
+        </div>
+    </section>
+</div>
+{% endfor %}
+    </div>
+</body>
+{% endblock content %}

@@ -40,8 +40,11 @@ INSTALLED_APPS = [
 
     'project.apps.ProjectConfig',
     'users.apps.UsersConfig',
+    'discussion.apps.DiscussionConfig',
+    'ckeditor',
+    'ckeditor_uploader'
 ]
-
+CKEDITOR_UPLOAD_PATH = "images/"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

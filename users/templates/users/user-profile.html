@@ -208,11 +208,19 @@
         <div class="column column--1of3">
           <div class="card text-center">
             <div class="card__body dev">
-              <img class="avatar avatar--xl dev__avatar" src="{{profile.profile_image.url}}" />
+              <img class="avatar avatar--xl dev__avatar" src="{{profile.imageURL}}" />
               <h2 class="dev__name">{{profile.name}}</h2>
+                <p class="dev__name" style="font-size: 1em;" >({{profile.position}})</p>
+
               <p class="dev__title"></p>
               <p class="dev__location">Based in {{profile.location}}</p>
               <p class="dev__location"><b>{{profile.short_intro}}</b></p>
+              {% if profile.marksheet %}
+              <a href="{% static profile.marksheet.url %}"><i class="fas fa-eye"></i>Latest Marksheet</a>
+              {% endif %}
+              {% if profile.resume %}
+              <a href="{% static profile.resume.url %}"><i class="fas fa-eye"></i>Latest Marksheet</a>
+              {% endif %}
               <small class= "message-tag"><a href="{%url 'send-message' profile.id%}">Message</a></small>
               <ul class="dev__social">
 
@@ -253,7 +261,7 @@
  {%for project in project%}
     <a href="{% url 'projects' project.id %}">
         <div class="project-card">
-            <img width="300px" src="{{project.featured_image.url}}" alt="">
+            <img width="300px" src="{{project.imageURL}}" alt="">
             <h1>{{project.title}}</h1>
             <p>{{project.discription|slice:"150"}}</p>
         </div>

@@ -4,7 +4,20 @@
 
 <form action="" method = "POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{form.as_p}}
+    {% comment %} {{form.as_p}} {% endcomment %}
+
+    {% for field in form %}
+        <div class = "form__field">
+            <label for = "forminput#text">{{field.label}}</label>
+            {{field}}
+        </div>
+    {% endfor %}
+
+    <div class = "form__field">
+        <label for = "forminput#text">Tags</label>
+        <textarea class = "input" name = "newtags" placeholder = "Add new tags here..."></textarea>
+    </div>
+
     <input type="submit">
 </form>
 

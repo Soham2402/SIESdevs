@@ -19,7 +19,7 @@
 
         <section class="right-side">
             <h1>{{projectObj.title}}</h1>
-            <img src="{{projectObj.featured_image.url}}" alt="" class="project-img">
+            <img src="{{projectObj.imageURL}}" alt="" class="project-img">
             <p> <a href="{% url 'user-profile' projectObj.owner.id %}" class="user-project-link-tag">By {{projectObj.owner.name}}</a> </p>
             <section class="technologies">
                 <h1>Technologies</h1>

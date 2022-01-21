@@ -65,7 +65,7 @@
         {%for project in projectdetails%}
         <a href="{%url 'projects' project.id%}" class="undecor-link">
             <div class="project-card">
-                <img src="{{project.featured_image.url}}" alt="" class="projects-img" >
+                <img src="{{project.imageURL}}" alt="" class="projects-img" >
                 <p class="project-title">{{project.title}}</p>
                 <h5 class="project-auth">by {{project.owner}}</h5>
                 <h4 class="vote">{{project.vote_ratio}}% positive feedback</h4>

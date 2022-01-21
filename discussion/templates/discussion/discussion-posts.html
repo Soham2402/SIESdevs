@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+*,*::before,*::after{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body{
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.5;
+}
+h1,h2,h3{
+    font-size: 1.25em;
+}
+a{
+    color: tomato;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+    color: #DF8549;
+}
+.container{
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+.question-card{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(241, 169, 110, 0.5);
+    max-width: 95%;
+    margin: 0 auto;
+    border: 0.5px solid  rgba(241, 169, 110, 0.966);
+    padding: 1.5em 3em;
+    gap: 0.8em;
+    border-radius: 16px;
+}
+.read-more{
+    display: flex;
+    /* align-self: center; */
+}
+.read-more__button{
+    padding: 1em 6em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: white;
+    background-color:  tomato;
+    border: 0.9px solid  rgba(241, 169, 110, 0.966);
+    font-size: 1em;
+    border: none;
+    border-radius: 32px;
+    cursor: pointer;
+    width: 100%;
+}
+.read-more__button:hover{
+    opacity: 0.5;
+}
+.author_name, .question-section{
+    border-bottom: 0.8px solid rgba(241, 169, 110, 0.966);
+    padding-bottom: 1em;
+}
+.tag-section{
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+}
+.tags{
+    padding: 0.5em 1em;
+    border: 0.8px solid rgba(241, 169, 110, 0.966);
+    border-radius: 16px;
+    text-transform: uppercase;
+    font-weight: 600 ;
+    color: tomato;
+}
+.read-more__link{
+    color: white;
+}
+.read-more__link:hover{
+    color: white;
+}
+@media(max-width:630px){
+    .question-card{
+        max-width: 100%;
+    }
+}
+
+</style>
+
+<body>
+{% for post in posts %}
+    <div class="container">
+        <section class="question-card">
+            <span class="author_name">By <a href="{% url 'user-profile' post.owner.id %}"> {{post.owner}}</a></a></span>
+            <article class="question-section">
+                <span class="question-title"><h2>{{post.title}}</h2></span>
+                <span class="question-detail">{{post.discription}}</span>
+            </article>
+            <section class="tag-section">
+
+            {% for tag in post.tags.all %}
+                <span class="tags">{{tag.name}}</span>
+            {% endfor %}
+            </section>
+            <a href="{% url 'single-discussion' post.id %}" class='read-more__link'>
+            <span class="read-more">
+                 <button class="read-more__button">Read More</button>
+            </span>
+             </a>
+        </section>
+    </div>
+    {% endfor %}  
+   
+
+    
+    <script src="" async defer></script>
+</body>
+
+
+{% endblock content %}
