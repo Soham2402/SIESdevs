@@ -124,7 +124,7 @@ h2{
 .skill-tag{
   border: 1px hsl(29, 88%, 48%) solid;
   border-radius: 6px;
-  padding: 2px 4px; 
+  padding: 4px 8px; 
   background-color: hsl(24, 84%, 81%);
 }
 .skill-tag:hover{

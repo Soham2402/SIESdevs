@@ -10,7 +10,7 @@ class Profile(models.Model):
     position = models.CharField(max_length=200, blank=True,null=True,default="Student")
     username = models.CharField(max_length=200, blank=True,null=True)
     location = models.CharField(max_length=200, blank=True,null=True)
-    short_intro = models.CharField(max_length=500, blank=True,null=True)
+    short_intro = models.CharField(max_length=500, blank=True,null=True)    
     bio = models.TextField(blank=True,null=True)
     marksheet = models.FileField(blank = True, null=True, upload_to='documents/')
     resume = models.FileField(blank = True, null=True, upload_to='documents/')

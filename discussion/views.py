@@ -10,6 +10,7 @@ def view_discussion(request):
     print(posts)
     return render(request, 'discussion/discussion-posts.html',context)
 
+
 def single_discussion(request,pk):
     form = ResponseForm()
     post = DiscussionPost.objects.get(id = pk)
@@ -25,6 +26,7 @@ def single_discussion(request,pk):
     context = {'post':post,'form':form}
     return render(request, 'discussion/single-discussion.html', context)
 
+@login_required(login_url="login")
 def create_discussion(request):
     form = DiscussionForm()
     user = request.user.profile
@@ -32,7 +34,7 @@ def create_discussion(request):
             newtags = request.POST.get("newtags").replace(","," ").split()
             form = DiscussionForm(request.POST,request.FILES)
             if form.is_valid():
-                disc = form.save()
+                disc = form.save(   )
                 disc.owner = user
                 for tag in newtags:
                     tag, created = Type.objects.get_or_create(name = tag)
@@ -41,3 +43,37 @@ def create_discussion(request):
             return redirect('view-discussion')
     context = {'form':form}
     return render(request,'discussion/disc-form.html',context)
+
+
+
+@login_required(login_url="login")
+def edit_discussion(request,pk):
+    discobj = DiscussionPost.objects.get(id = pk)
+    form = DiscussionForm(instance=discobj)
+    user = request.user.profile
+    if request.method == "POST":
+            newtags = request.POST.get("newtags").replace(","," ").split()
+            form = DiscussionForm(request.POST,request.FILES,instance=discobj)
+            if form.is_valid():
+                disc = form.save(   )
+                disc.owner = user
+                for tag in newtags:
+                    tag, created = Type.objects.get_or_create(name = tag)
+                    disc.tags.add(tag)
+                disc.save()
+            return redirect('view-discussion')
+    context = {'form':form}
+    return render(request,'discussion/disc-form.html',context)
+
+
+@login_required(login_url="login")
+def delete_disc(request,pk):
+    discObj = DiscussionPost.objects.get(id = pk)
+    form = DiscussionForm(instance=discObj)
+    if request.method == 'POST':
+        discObj.delete()
+        return redirect('view-discussion')
+    context = {'form':form}
+    return render(request,'delete_template.html',context)
+
+

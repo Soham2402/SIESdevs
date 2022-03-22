@@ -81,3 +81,6 @@ def deletePost(request,pk):
         return redirect('project')
     context = {'form':form}
     return render(request,'delete_template.html',context)
+
+    
+    

@@ -1,4 +1,5 @@
 {%extends 'base.html'%}
+{% load static %}
 
 {%block content%}
 
@@ -201,6 +202,84 @@
 .top-skill{
     margin-top: 1em;
 }
+
+h1,h2,h3{
+    font-size: 1.25em;
+}
+a{
+    color: tomato;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+    color: #DF8549;
+}
+.container{
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+.question-card{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(241, 169, 110, 0.5);
+    max-width: 95%;
+    margin: 0 auto;
+    border: 0.5px solid  rgba(241, 169, 110, 0.966);
+    padding: 1.5em 3em;
+    gap: 0.8em;
+    border-radius: 16px;
+}
+.read-more{
+    display: flex;
+    /* align-self: center; */
+}
+.read-more__button{
+    padding: 1em 6em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: white;
+    background-color:  tomato;
+    border: 0.9px solid  rgba(241, 169, 110, 0.966);
+    font-size: 1em;
+    border: none;
+    border-radius: 32px;
+    cursor: pointer;
+    width: 100%;
+}
+.read-more__button:hover{
+    opacity: 0.5;
+}
+.author_name, .question-section{
+    border-bottom: 0.8px solid rgba(241, 169, 110, 0.966);
+    padding-bottom: 1em;
+}
+.tag-section{
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+}
+.tags{
+    padding: 0.5em 1em;
+    border: 0.8px solid rgba(241, 169, 110, 0.966);
+    border-radius: 16px;
+    text-transform: uppercase;
+    font-weight: 600 ;
+    color: tomato;
+}
+.read-more__link{
+    color: white;
+}
+.read-more__link:hover{
+    color: white;
+}
+@media(max-width:630px){
+    .question-card{
+        max-width: 100%;
+    }
+}
+
 </style>
 <main class="settingsPage profile my-md">
     <div class="container">
@@ -216,10 +295,15 @@
               <p class="dev__location">Based in {{profile.location}}</p>
               <p class="dev__location"><b>{{profile.short_intro}}</b></p>
               {% if profile.marksheet %}
-              <a href="{% static profile.marksheet.url %}"><i class="fas fa-eye"></i>Latest Marksheet</a>
+              {% comment %} <a href="{% static profile.marksheet.url %}"><i class="fas fa-eye"></i>Latest Marksheet</a> {% endcomment %}
+              <small class= "message-tag"><a href="{% static profile.marksheet.url %}">Marksheet</a></small> </br></br>
+
               {% endif %}
+              
               {% if profile.resume %}
-              <a href="{% static profile.resume.url %}"><i class="fas fa-eye"></i>Latest Marksheet</a>
+              {% comment %} <a href="{% static profile.resume.url %}"><i class="fas fa-eye"></i>Latest Marksheet</a> {% endcomment %}
+              <small class= "message-tag"><a href="{% static profile.resume.url %}">Resume</a></small> </br></br>
+
               {% endif %}
               <small class= "message-tag"><a href="{%url 'send-message' profile.id%}">Message</a></small>
               <ul class="dev__social">
@@ -246,7 +330,7 @@
 
         <h1 class = 'other-skill'>OTHER SKILLS</h1>
         {%for skill in otherSkills%}
-        <span class="tag tag--pill tag--main">
+        <span class="tag  ">
             <small class= "skill-tag">{{skill}}</small>
           </span>
         {%endfor%}
@@ -270,4 +354,24 @@
 </div>
 </section>
 <hr>
+
+<div class="disc-section">
+    {% for discussion in discussion %}
+    <div class="container">
+        <section class="question-card">
+            <span class="author_name">By <a href="{% url 'user-profile' discussion.owner.id %}"> {{discussion.owner}} </a></a></span>
+            <article class="question-section">
+                <span class="question-title"><h2> {{discussion.title}} </h2></span>
+                <span class="question-detail">{{discussion.discription}}</span>
+            </article>
+            <a href="{% url 'single-discussion' discussion.id %}" class='read-more__link'>
+                <span class="read-more">
+                     <button class="read-more__button">Read More</button>
+                </span>
+                 </a>
+        </section>
+    </div>
+    {% endfor %}
+</div>
+
 {%endblock content%}

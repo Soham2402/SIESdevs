@@ -39,7 +39,8 @@ a{
     border-radius: 16px;
 }
 .comment-box{
-    fwidth: 100%;
+    width: 75%;
+    min-width: 75%; 
 }
 .question-detail{
     font-size: 1.35em;
@@ -147,7 +148,7 @@ ul{
         <a href="{% url 'login' %}?next={{request.path}}" class="user-project-link-tag">You need to login to add a review</a>
     {% endif %}
 
-    <span class="answer-amount">There are 1 responses to this post</span>
+    <span class="answer-amount">There's {{post.total_vote}} comment{{post.vote_total|pluralize:"s"}} in the post </span>
 
     {% for response in post.discreview_set.all %}
     <div class="comment-container">

@@ -2,6 +2,31 @@
 
 {% block content %}
 
+<style>
+    body{
+        display: block;
+    }
+    input[type=text],textarea,django-ckeditor-widget {
+        margin: 0 0;
+    }
+    textarea,text{
+        width: 50%;
+    }
+    .form-container{
+        background-color: #f88b4380;
+        margin: 5% 15% 5% 15%;
+        padding: 2em 5em 2em 5em;
+        border: 2px solid rgba(230, 141, 24, 0.212);
+        overflow: hidden;
+        border-radius: 16px;
+    }
+    input[type=submit]{
+        padding: 8px 16px;
+    }
+</style>
+
+<div class="form-container">
+<center>
 <form action="" method = "POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% comment %} {{form.as_p}} {% endcomment %}
@@ -20,5 +45,6 @@
 
     <input type="submit">
 </form>
-
+</center>
+</div>
 {% endblock content %}

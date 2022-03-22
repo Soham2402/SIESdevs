@@ -53,7 +53,8 @@ def userProfile(request,pk):
     topSkills = profile.skills_set.exclude(discription__exact = "")
     otherSkills = profile.skills_set.filter(discription = "")
     projects = profile.project_set.all()
-    context = {'profile':profile,'topSkills':topSkills,'otherSkills':otherSkills,"project":projects}
+    disc = profile.discussionpost_set.all()
+    context = {'profile':profile,'topSkills':topSkills,'otherSkills':otherSkills,"project":projects,'discussion':disc}
     return render(request,'users/user-profile.html',context)
 
 
@@ -62,7 +63,8 @@ def userAccount(request):
     profile = request.user.profile
     Skills = profile.skills_set.all()
     project = profile.project_set.all()
-    context = {"profile":profile,"skills":Skills,"project":project}
+    discussion = profile.discussionpost_set.all()
+    context = {"profile":profile,"skills":Skills,"project":project,'discussion':discussion}
     return render(request,'users/user-account.html',context)
 
 
