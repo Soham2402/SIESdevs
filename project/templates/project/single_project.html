@@ -11,11 +11,16 @@
     <div class="canvas">
         <section class="left-side">
 
-            <h1>Links</h1>
-            <div><a href="{{project.demo_link}}" class="user-project-link-tag">Demo Link</a></div>
-            <div><a href="{{project.source_link}}" class="user-project-link-tag">Source Code</a></div>
-
+          <h1>Links</h1>
+        {% if projectObj.source_link %}
+            <div><a href="{{ projectObj.demo_link }}" class="user-project-link-tag">Demo Link</a></div>
+        {% endif %}
+        {% if projectObj.demo_link %}
+            <div><a href="{{ projectObj.source_link }}" class="user-project-link-tag">Source Code</a></div>
+            {% endif %}
         </section>
+ 
+      
 
         <section class="right-side">
             <h1>{{projectObj.title}}</h1>

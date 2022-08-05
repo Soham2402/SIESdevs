@@ -4,7 +4,7 @@ from .models import Profile,Skills,Message
 class editProfile(ModelForm):
     class Meta:
         model = Profile
-        fields = ['name','email','location','marksheet','short_intro','bio','profile_image','social_github',
+        fields = ['name','email','location','marksheet',"resume",'short_intro','bio','profile_image','social_github',
         'social_twitter','social_linkedin','social_youtube','social_website']
         
     def __init__(self,*args,**kwargs):

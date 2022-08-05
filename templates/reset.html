@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Enter new password<h1>
+{% comment %} <h1>Enter new password<h1>
 
 <p>Please enter your new password twice so we can verify you typed it in correctly.
 <p>
@@ -9,5 +9,26 @@
 {% csrf_token %}
 {{form.as_p}}
 <input type="submit">
-</form>
+</form> {% endcomment %}
+
+
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <h3>Password reset</h3>
+
+            <p>Forgotten your password? Enter your email address below, and we’ll email instructions for setting a new
+                one.</p>
+
+            <br>
+
+            <form class="form" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</main>
+
 {% endblock content %}
