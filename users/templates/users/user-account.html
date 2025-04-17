@@ -1,409 +1,339 @@
 {% extends 'base.html' %}
-
 {% load static %}
- 
-  <!-- Main Section -->
 {% block content %}
+
 <style>
-.body{
-    margin:0;
-}
-.container{
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #eef4fb;
     margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 10px;
-    align-content: space-between;
-    justify-content: start;
-}
-.link-text{
-    color: black;
-    
-}
-.link-text:hover{
-    text-decoration:none;
-}
-.info-card{
-    display: flex;
-    flex-direction: column;
-    background-color: antiquewhite;
-    padding: 10px;
-    align-items: center;
-}
-.info-card h3 {
-    font-size: 20px;
-}
-.info-card p {
-    border: 2px solid aqua;
-    padding: 6px;
-    background-color: aquamarine;
-    border-radius: 16px;
-    
-}
-.skills{
-    display: flex;
-    gap: 20px;
-    margin-bottom: 10px;
-}
-.add-skill{
-    border: 2px antiquewhite solid;
-    padding: 7px 14px;
-    text-align: center;
-    border-radius: 8px;
-}
-.add-skill:hover{
-    background-color: blanchedalmond;
-    transition: 0.2s ease-in;
-    cursor: pointer;
-}
-.project-container{
-    margin-top: 50px;
-    margin-left: 5%;
-    margin-bottom: 5%;
-    display: flex;
-    justify-content: start;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 50px;
-}
-.project-card{
-    background-color: blanchedalmond;
-    max-width: 300px;
-    border-radius: 16px;
-    padding: 8px;
-}
-.edit-delete-project{
-    display: flex;
-    align-items: stretch;
-    justify-content: space-evenly;
+    color: #222;
+  }
 
-}
-.edit-project, .delete-project{
-    text-decoration: none;
-    border: 2px rgba(159, 159, 233, 0.767) solid;
-    border-radius: 6px;
-    color: black;
-    padding: 8px 16px;
-}
-.project-img{
-    align-self: flex-start;
-    max-width: 290px;
-}
+  .container {
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+    padding: 2rem;
+  }
 
-
-
-.layout {
+  .layout {
     display: flex;
-    flex-flow: row wrap;
     justify-content: space-between;
-}
-.layout > .column.column--1of3 {
-    flex-basis: 30%;
+    flex-wrap: wrap;
+    gap: 2rem;
   }
-  .layout > .column.column--2of3 {
-      flex-basis: 55%;
+
+  .column--1of3 {
+    flex: 1 1 30%;
+    max-width: 400px;
   }
-  .layout > .column {
-      margin-bottom: 3rem;
+
+  .column--2of3 {
+    flex: 1 1 65%;
   }
-.text-center {
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    padding: 2rem;
+    transition: transform 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+  }
+
+  .text-center {
     text-align: center;
-}
-.container {
-    width: 92%;
-    max-width: 165rem;
-    margin: 0 auto;
-    box-sizing: border-box;
-    display: flex;
-}
-.card_body{
-  padding: 36px;
-}
-.my-md {
-    margin: 3rem auto;
-}
-.profile .card > .dev {
-    padding: 4rem;
-    box-sizing: border-box;
-}
-.settingsPage .dev > .settings__btn {
-    display: inline-block;
-    margin-bottom: 3rem;
-}
-.settings__title {
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: #2d2d39;
-}
-.tag:not(:last-child) {
-    margin-right: 0.5rem;
-    margin-bottom: 1rem;
-}
-.tag--main, .tag--main > small {
-    background: #e6faff;
-    color: #5aa5b9;
-    font-weight: 500;
-}
-.tag--pill {
-    border-radius: 5rem;
-    background: rgb(247, 197, 164);
-}
-.tag{
-  align-items: center;
-  height: fit-content;
-  width: fit-content;
-  padding: .2rem 1.5rem;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-.devInfo__title, .devInfo__subtitle {
-    font-size: 1.9rem;
-    color: #2d2d39;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
   }
-.dev__title {
-    font-size: 1.6rem;
-    font-weight: 500;
-    line-height: 1.3;
-      display: block;
-      margin-block-start: 1em;
-      margin-block-end: 1em;
-      margin-inline-start: 0px;
-      margin-inline-end: 0px;
-}
-.dev__name {
-    color: #2d2d39;
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-}
-.dev__avatar{
-   display: block;
-   margin: auto;
-   line-height: 1.6;
-}
-.avatar--xl {
-    height: 20rem;
-    width: 20rem;
+
+  .avatar--xl {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    border: 2px solid #5aa5b9;
+    border: 4px solid #3498db;
     object-fit: cover;
-}
-.dev__location {
-    margin-top: 1rem;
-}
-.tag--lg {
-    padding: 0.8rem 3rem;
-    font-size: 1.4rem;
-}
-.tag--sub, .tag--sub > small {
-    background: #ededfd;
-    color: #51546e;
+    display: block;
+    margin: 1rem auto;
+  }
+
+  .dev__name {
+    font-size: 1.5rem;
+    color: #1a1a1a;
+    margin-bottom: 0.3rem;
+  }
+
+  .dev__location {
+    color: #5a5a5a;
+    font-size: 1rem;
+    margin: 0.3rem 0;
+  }
+
+  .settings__btn {
+    display: inline-block;
+    background-color: #2980b9;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
     font-weight: 500;
-}
-.tag--pill {
-    border-radius: 5rem;
-}
-.settings {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.settings__table {
-    margin-top: 3rem;
-    margin-bottom: 4rem;
-    padding: 0 3rem;
-    background: #fffefd;
-}
-.top-skills{
-    display: flex;
-    gap: 20px;
-    margin-bottom: 10px;
-    font-size: 2em;
-}
-.top-skill-tag{
-    font-size:0.75em;
-    font-weight: 600;
-    color:hsl(29, 88%, 48%);
-}
-.skill-bar{
-    margin-bottom: 2em;
-}
+    font-size: 0.9rem;
+    text-decoration: none;
+    margin: 6px 4px;
+    transition: background 0.2s ease;
+  }
 
-.disc-section{
-    width: 100%;
+  .settings__btn:hover {
+    background-color: #1f6695;
+  }
+
+  .devInfo__title, .settings__title {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+  }
+
+  .devInfo__about {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6;
+  }
+
+  .top-skills,
+  .tag {
+    display: inline-block;
+    margin: 6px 6px;
+  }
+
+  .top-skill-tag,
+  .skill-tag {
+    background-color: #d6eaf8;
+    border: 1px solid #aed6f1;
+    color: #154360;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .skill-bar {
     display: flex;
     flex-direction: column;
-}
-.question-card{
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(241, 169, 110, 0.5);
-    max-width: 90%;
-    margin: 0 auto;
-    border: 0.5px solid  rgba(241, 169, 110, 0.966);
-    padding: 1.5em 3em;
-    gap: 0.8em;
-    border-radius: 16px;
-    gap: 2em;
-    margin-bottom: 2em;
-}
-.read-more{
-    display: flex;
-    /* align-self: center; */
-}
-.read-more__button{
-    padding: 1em 6em;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: white;
-    background-color:  tomato;
-    border: 0.9px solid  rgba(241, 169, 110, 0.966);
-    font-size: 1em;
-    border: none;
-    border-radius: 32px;
-    cursor: pointer;
-    width: 100%;
-}
-.read-more__button:hover{
-    opacity: 0.5;
-}
-.author_name, .question-section{
-    border-bottom: 0.8px solid rgba(241, 169, 110, 0.966);
-    padding-bottom: 1em;
-}
-.tag-section{
-    margin-top: 1em;
-    margin-bottom: 1em;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2em;
-}
-.tags{
-    padding: 0.5em 1em;
-    border: 0.8px solid rgba(241, 169, 110, 0.966);
-    border-radius: 16px;
-    text-transform: uppercase;
-    font-weight: 600 ;
-    color: tomato;
-}
-.read-more__link{
-    color: white;
-}
-.read-more__link:hover{
-    color: white;
-}
-.edit-delete-post{
-    display: flex;
-    gap: 1rem;
-    align-content: space-between;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
+  }
 
-@media(max-width:630px){
-    .question-card{
-        max-width: 100%;
+  .edit-del-btn, .edit-delete-btn {
+    margin-left: 10px;
+    font-size: 0.85rem;
+  }
+
+  .edit-del-btn a, .edit-delete-btn a {
+    color: #2980b9;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .edit-del-btn a:hover, .edit-delete-btn a:hover {
+    text-decoration: underline;
+  }
+
+  .project-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 2rem;
+    justify-content: center;
+  }
+
+  .project-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    width: 300px;
+    transition: 0.2s;
+  }
+
+  .project-card:hover {
+    transform: scale(1.02);
+  }
+
+  .project-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .project-card h1 {
+    font-size: 1.2rem;
+    color: #1a5276;
+    margin-top: 0.5rem;
+  }
+
+  .project-card p {
+    color: #566573;
+    font-size: 0.95rem;
+  }
+
+  .edit-project,
+  .delete-project {
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: #2e86de;
+  }
+
+  .delete-project {
+    color: #c0392b;
+  }
+
+  .disc-section {
+    padding: 2rem;
+  }
+
+  .question-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  }
+
+  .author_name a {
+    color: #2980b9;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .question-title h2 {
+    color: #2e4053;
+    margin-bottom: 0.3rem;
+  }
+
+  .question-detail {
+    color: #566573;
+    margin-bottom: 1rem;
+  }
+
+  .edit-delete-post a {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-right: 10px;
+    text-decoration: none;
+  }
+
+  .edit-delete-post .edit-project {
+    color: #2980b9;
+  }
+
+  .edit-delete-post .delete-project {
+    color: #c0392b;
+  }
+
+  @media screen and (max-width: 900px) {
+    .layout {
+      flex-direction: column;
     }
-}
-
-
+    .column--1of3, .column--2of3 {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+    .project-container {
+      justify-content: center;
+    }
+  }
 </style>
+
 <main class="settingsPage profile my-md">
   <div class="container">
     <div class="layout">
-      <div class="column column--1of3">
+      <!-- Left Column -->
+      <div class="column--1of3">
         <div class="card text-center">
-          <div class="card__body dev">
-            <a class="tag tag--pill tag--main settings__btn" href="{% url 'edit-account'%}"><i class="im im-edit"></i>
-              Edit</a>
-            <img class="avatar avatar--xl dev__avatar" src="{{profile.imageURL}}" />
-            
-            <h2 class="dev__name">{{profile.name}}</h2>
-            <p class="dev__name" style="font-size: 1em;" >({{profile.position}})</p>
-            <p class="dev__title">{{profile.short_intro}}</p>
-            <p class="dev__location">{{profile.location}}</p>
-            {% if profile.marksheet %}
-            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% static profile.marksheet.url %}"><i class="im im-plus"></i> Latest Marksheet</a>
+          <a class="settings__btn" href="{% url 'edit-account'%}"><i class="im im-edit"></i> Edit</a>
+          <img class="avatar avatar--xl" src="{{profile.imageURL}}" />
+          <h2 class="dev__name">{{profile.name}}</h2>
+          <p class="dev__name">({{profile.position}})</p>
+          <p class="dev__title">{{profile.short_intro}}</p>
+          <p class="dev__location">{{profile.location}}</p>
 
-            {% endif %}
-            
-            {% if profile.resume %}
-            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% static profile.resume.url %}"><i class="im im-plus"></i>Resume</a>
-            {% endif %}
-            <br>
-            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create-project'%}"><i class="im im-plus"></i> Add Project</a>
-            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create-discussion'%}"><i class="im im-plus"></i> Start Discussion </a>
-            <ul class="dev__social">
+          {% if profile.marksheet %}
+          <a class="settings__btn" href="{% static profile.marksheet.url %}"><i class="im im-plus"></i> Latest Marksheet</a>
+          {% endif %}
 
-            </ul>
-          </div>
+          {% if profile.resume %}
+          <a class="settings__btn" href="{% static profile.resume.url %}"><i class="im im-plus"></i> Resume</a>
+          {% endif %}
+
+          <a class="settings__btn" href="{% url 'create-project'%}"><i class="im im-plus"></i> Add Project</a>
+          <a class="settings__btn" href="{% url 'create-discussion'%}"><i class="im im-plus"></i> Start Discussion</a>
         </div>
       </div>
-      </div>
-      <div class="column column--2of3">
-        <div class="devInfo">
+
+      <!-- Right Column -->
+      <div class="column--2of3">
+        <div class="card">
           <h3 class="devInfo__title">About Me</h3>
           <p class="devInfo__about">{{profile.bio}}</p>
-        </div>
-        <div class="settings">
+
           <h3 class="settings__title">Skills</h3>
-          <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create-skill' %}"><i
-              class="im im-plus"></i> Add Skill</a>
-        </div>
-      {%for skill in skills%}
-          <span class="top-skills">
+          <a class="settings__btn" href="{% url 'create-skill' %}"><i class="im im-plus"></i> Add Skill</a>
+
+          {% for skill in skills %}
+          <div class="top-skills">
             <section class="skill-bar">
               <small class="top-skill-tag">{{skill}}</small>
               <small>{{skill.discription}}</small>
             </section>
-              <small class = "edit-del-btn"> <a href="{% url 'edit-skill' skill.id %}">Edit</a> </small>
-              <small class= 'edit-delete-btn'><a href="{% url 'delete-skill' skill.id %}?next=/user-account">Delete</a></small>
-          </span>
-      {%endfor%}
-        
+            <small class="edit-del-btn">
+              <a href="{% url 'edit-skill' skill.id %}">Edit</a>
+            </small>
+            <small class="edit-delete-btn">
+              <a href="{% url 'delete-skill' skill.id %}?next=/user-account">Delete</a>
+            </small>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
-</div>
-  
+  </div>
 </main>
+
 <hr>
 <center><h1>Your Projects</h1></center>
 <div class="project-container">
- {%for project in project%}
-    <div class="project-card">
-        <img width="300px" class = "project-img" src="{{project.imageURL}}" alt="">
-        <h1>{{project.title}}</h1>
-        <p>{{project.discription|slice:"150"}}</p>
-        <div class="edit-delete-project">
-            <a href="{%url 'edit-project' project.id%}" class="edit-project">Edit</a>
-            <a href="{%url 'delete-project' project.id%}?next=/user-account" class="delete-project">Delete</a>
-        </div>
+  {% for project in project %}
+  <div class="project-card">
+    <img class="project-img" src="{{project.imageURL}}" alt="">
+    <h1>{{project.title}}</h1>
+    <p>{{project.discription|slice:"150"}}</p>
+    <div class="edit-delete-project">
+      <a href="{% url 'edit-project' project.id %}" class="edit-project">Edit</a>
+      <a href="{% url 'delete-project' project.id %}?next=/user-account" class="delete-project">Delete</a>
     </div>
-    {%endfor%}
+  </div>
+  {% endfor %}
 </div>
+
 <hr>
 <center><h1>Your Discussions</h1></center>
+<div class="disc-section container">
+  {% for discussion in discussion %}
+  <section class="question-card">
+    <span class="author_name">By <a href="{% url 'user-profile' discussion.owner.id %}">you</a></span>
+    <article class="question-section">
+      <span class="question-title"><h2>{{discussion.title}}</h2></span>
+      <span class="question-detail">{{discussion.discription}}</span>
+    </article>
+    <section class="edit-delete-post">
+      <a href="{% url 'edit-disc' discussion.id %}" class="edit-project">Edit</a>
+      <a href="{% url 'delete-disc' discussion.id %}" class="delete-project">Delete</a>
+    </section>
+  </section>
+  {% endfor %}
+</div>
 
-<div class="disc-section">
-    {% for discussion in discussion %}
-    <div class="container">
-        <section class="question-card">
-            <span class="author_name">By <a href="{% url 'user-profile' discussion.owner.id %}"> you </a></a></span>
-            <article class="question-section">
-                <span class="question-title"><h2> {{discussion.title}} </h2></span>
-                <span class="question-detail">{{discussion.discription}}</span>
-            </article>
-            <section class="edit-delete-post">
-                <a href="{%url 'edit-disc' discussion.id%}" class="edit-project">Edit</a>
-                <a href="{%url 'delete-disc' discussion.id%}" class="delete-project">Delete</a>
-            </section>
-        </section>
-    </div>
-    {% endfor %}
-    </div>
-
-{% endblock  %}
+{% endblock %}

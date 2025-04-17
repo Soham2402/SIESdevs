@@ -1,68 +1,186 @@
-{%extends 'base.html'%}
-<!-- Add skills and limit it into 5 skills here  -->
-<!-- limit the discription to 50 chars -->
-{%block content%}
+{% extends 'base.html' %} {% block content %}
+<style>
+  /* === BLUE THEME STYLING === */
+  .hero-section {
+    padding: 3em 0;
+    background: linear-gradient(145deg, #eaf6ff, #d7ebff);
+    text-align: center;
+  }
 
+  .hero-section__box h2 {
+    font-size: 2.3em;
+    margin-bottom: 0.2em;
+    color: #002244;
+  }
+
+  .hero-section__box span {
+    color: #1e90ff;
+    font-weight: 600;
+  }
+
+  .form__field {
+    margin: 1.5em auto;
+    display: flex;
+    justify-content: center;
+    max-width: 500px;
+  }
+
+  .input--text {
+    flex: 1;
+    padding: 10px 15px;
+    font-size: 1em;
+    border: 1px solid #1e90ff;
+    border-radius: 8px 0 0 8px;
+  }
+
+  .btn--sub {
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 0 8px 8px 0;
+    font-weight: 500;
+  }
+
+  .white-section {
+    padding: 3em 2em;
+    background-color: #f3f9ff;
+  }
+
+  .profile-column {
+    margin-bottom: 2em;
+  }
+
+  .card {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    background: white;
+    transition: transform 0.3s ease;
+    height: 100%;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .dev_profile {
+    text-align: center;
+    padding: 1.5em 1em;
+  }
+
+  .avatar--md {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-bottom: 0.8em;
+    border: 2px solid #1e90ff;
+  }
+
+  .dev_profile h3 {
+    font-size: 1.3em;
+    margin-bottom: 0.2em;
+    color: #002244;
+  }
+
+  .dev_profile h5 {
+    font-weight: 400;
+    color: #666;
+    font-size: 0.95em;
+  }
+
+  .card-body {
+    padding: 1em 1.5em;
+  }
+
+  .card-body p {
+    font-size: 1em;
+    color: #333;
+    margin-bottom: 1em;
+  }
+
+  .dev__skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6em;
+  }
+
+  .skill-tag {
+    background-color: #e1f0ff;
+    border: 1px solid #1e90ff;
+    border-radius: 16px;
+    padding: 4px 10px;
+    font-size: 0.85em;
+    color: #1e90ff;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
 </style>
-{% comment %} <form action="{% url 'profiles' %}" method="get">
-    <input type="search" name="search_query" placeholder = "Enter name of user" value = '{{search_query}}'>
-    <input type="submit" value="submit">
-</form> {% endcomment %}
+
 <section class="hero-section text-center">
-    <div class="container-fluid container--narrow">
-      <div class="hero-section__box">
-        <h2>CONNECT WITH <span>DEVELOPERS</span></h2>
-        <h2>FROM SIES COLLEGE.</h2>
-      </div>
-
-      <div class="hero-section__search">
-
-        <form id="searchForm" class="form" action="{%url 'profiles'%}" method="get">
-          <div class="form__field">
-            <input class="input input--text" id="formInput#search" type="text" name="search_query" value="{{search_query}}" placeholder="Search by developer name">
-          </div>
-
-          <input class="btn btn--sub btn--lg" type="submit" value="Search">
-        </form>
-
-      </div>
+  <div class="container-fluid container--narrow">
+    <div class="hero-section__box">
+      <h2>CONNECT WITH <span>DEVELOPERS</span></h2>
+      <h2>FROM RJ COLLEGE.</h2>
     </div>
-  </section>
 
-  <section class="white-section" id="profile">
+    <div class="hero-section__search">
+      <form
+        id="searchForm"
+        class="form"
+        action="{% url 'profiles' %}"
+        method="get"
+      >
+        <div class="form__field">
+          <input
+            class="input input--text"
+            id="formInput#search"
+            type="text"
+            name="search_query"
+            value="{{ search_query }}"
+            placeholder="Search by developer name"
+          />
+          <input class="btn btn--sub btn--lg" type="submit" value="Search" />
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
 
-    <div class="row">
-    {%for profiles in profiles %}
+<section class="white-section" id="profile">
+  <div class="row">
+    {% for profiles in profiles %}
     <div class="profile-column col-lg-4 col-md-6">
-        <div class="card">
-            <a href="{% url 'user-profile' profiles.id %}" class="link">
+      <div class="card">
+        <a href="{% url 'user-profile' profiles.id %}" class="link">
           <div class="card-header">
             <div class="dev_profile">
-              <img class="avatar avatar--md" src="{{ profiles.imageURL }}" alt="image">
-              <h3>{{profiles.name}}</h3>
-              <h5>{{profiles.username}}</h5>
+              <img
+                class="avatar avatar--md"
+                src="{{ profiles.imageURL }}"
+                alt="{{ profiles.name }}"
+              />
+              <h3>{{ profiles.name }}</h3>
+              <h5>{{ profiles.username }}</h5>
             </div>
           </div>
 
           <div class="card-body">
-            <p>{{profiles.short_intro}}</p>
+            <p>{{ profiles.short_intro|truncatechars:50 }}</p>
 
             <div class="dev__skills">
-            {%for skill in profiles.skills_set.all%}
-              <span>
-                <small class= "skill-tag">{{skill.name}}</small>
-              </span>
-            {%endfor%}
+              {% for skill in profiles.skills_set.all|slice:":5" %}
+              <span><small class="skill-tag">{{ skill.name }}</small></span>
+              {% endfor %}
             </div>
-
           </div>
         </a>
-        </div>
       </div>
-      {%endfor%}
     </div>
+    {% endfor %}
+  </div>
+</section>
 
-  </section>
-  {% include 'pagination.html' with queryset=profiles custom_range=custom_range %}
-
-{%endblock content%}
+{% include 'pagination.html' with queryset=profiles custom_range=custom_range %}
+{% endblock content %}

@@ -1,10 +1,73 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="" method="POST">
-    {% csrf_token %}
-    <p>Are you sure you want to delete {{object}}</p>
-    <a href="{{request.GET.next}}">Go back</a>
-    <input type="submit" value="Yes!">
-</form>
-{%endblock content%}
+<style>
+    .delete-confirmation {
+        max-width: 500px;
+        margin: 60px auto;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+    }
+
+    .delete-confirmation p {
+        font-size: 18px;
+        color: #1e3a8a;
+        margin-bottom: 30px;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn-cancel,
+    .btn-delete {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        flex: 1;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .btn-cancel {
+        background-color: #f0f4ff;
+        color: #1e3a8a;
+        border: 1px solid #1e3a8a;
+    }
+
+    .btn-cancel:hover {
+        background-color: #dbe8ff;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+    }
+
+    .btn-delete:hover {
+        background-color: #c82333;
+    }
+</style>
+
+<div class="delete-confirmation">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <p>Are you sure you want to delete <strong>{{ object }}</strong>?</p>
+        <div class="form-actions">
+            <a href="{{ request.GET.next }}" class="btn-cancel">Go Back</a>
+            <input type="submit" class="btn-delete" value="Yes!">
+        </div>
+    </form>
+</div>
+{% endblock content %}

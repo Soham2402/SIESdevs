@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'discussion.apps.DiscussionConfig',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
+    'django_extensions'
 ]
 CKEDITOR_UPLOAD_PATH = "images/"
 MIDDLEWARE = [

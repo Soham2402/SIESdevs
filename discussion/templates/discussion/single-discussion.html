@@ -1,168 +1,228 @@
-{% extends 'base.html' %}
-
-{% block content %}
-
+{% extends 'base.html' %} {% block content %}
 <style>
-    body{
-    /* background-color:rgba(236, 193, 158, 0.719) ; */
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.25rem;
-    line-height: 1.5;
-}
-h1,h2,h3{
-    font-size: 1.55em;
-}
-a{
-    color: tomato;
+  body {
+    font-family: "Roboto", sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    background-color: #f8fafd;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-size: 1.5em;
+    color: #1f2937;
+  }
+
+  a {
+    color: #2563eb;
     text-decoration: none;
-}
+    font-weight: 500;
+  }
 
-.container-box{
-   /* margin: 2em; */
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   gap:2em;
-   margin: 1em auto;
-   width: 100%
+  a:hover {
+    color: #1d4ed8;
+  }
 
-}
-.question-card, .comment-box{
+  .container-box {
     display: flex;
     flex-direction: column;
-    background-color: rgba(241, 169, 110, 0.281);
-    margin: 0 auto;
-    width: 70%;
-    border: 0.5px solid  rgba(241, 169, 110, 0.966);
-    padding: 1.5em 3em;
-    gap: 0.8em;
-    border-radius: 16px;
-}
-.comment-box{
-    width: 75%;
-    min-width: 75%; 
-}
-.question-detail{
-    font-size: 1.35em;
-}
-.author_name, .question-section{
-    border-bottom: 0.8px solid rgba(241, 169, 110, 0.966);
+    align-items: center;
+    gap: 2em;
+    margin: 2em auto;
+    max-width: 900px;
+    padding: 0 1em;
+  }
+
+  .question-card,
+  .comment-box {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    padding: 2em;
+    gap: 1em;
+    border-radius: 12px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+  }
+
+  .question-detail {
+    font-size: 1.25em;
+    color: #374151;
+  }
+
+  .author_name {
+    font-size: 0.95em;
+    color: #6b7280;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.75em;
+  }
+
+  .author_name a {
+    color: #2563eb;
+  }
+
+  .question-section {
+    border-bottom: 1px solid #e5e7eb;
     padding-bottom: 1em;
-}
-.tag-section{
-    align-self: center;
+  }
+
+  .details {
+    font-size: 1rem;
+    color: #374151;
     margin-top: 1em;
-    margin-bottom: 1em;
+  }
+
+  .tag-section {
+    margin-top: 1.5em;
     display: flex;
     flex-wrap: wrap;
-    gap: 2em;
-}
-.tags{
+    gap: 1em;
+  }
+
+  .tags {
     padding: 0.5em 1em;
-    border: 0.8px solid rgba(241, 169, 110, 0.966);
-    border-radius: 16px;
+    border: 1px solid #2563eb;
+    border-radius: 9999px;
+    background-color: #eff6ff;
+    color: #2563eb;
+    font-size: 0.8rem;
+    font-weight: 600;
     text-transform: uppercase;
-    font-weight: 600 ;
-    color: tomato;
-}
-.details{
-    font-size: 1.19em;
-    max-width: 90%;
-    margin:0 auto;
-}
-.discussion_details{
-    line-height: 2.1;
-    display: flex;
-    width:100%;
-    flex-direction: column;
-    /* align-content: center;
-    align-items: center; */
-}
-img{
+  }
+
+  .discussion_details {
+    line-height: 1.9;
+    white-space: pre-wrap;
+  }
+
+  img {
     max-width: 100%;
-    align-self: center;
-    justify-self: center;
-}
-ul{
-    align-self: center;
-    justify-self: center;
-}
-.user-info{
+    border-radius: 8px;
+  }
+
+  .user-info {
     display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
     align-items: center;
-}
-.user-img{
+    gap: 1em;
+  }
+
+  .user-img {
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    align-self: center;
-}
-.answer-amount{
-    font-size: 1.35em;
-    font-weight: 300;
-}
+    object-fit: cover;
+  }
 
-@media(max-width:630px){
-    .question-card, .comment-box{
-        max-width: 90%;
+  .answer-prompt h1 {
+    font-size: 1.4rem;
+    color: #111827;
+    text-align: center;
+    margin-top: 1em;
+  }
+
+  .btn {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 0.75em 1.5em;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .btn:hover {
+    background-color: #1e40af;
+  }
+
+  .answer-amount {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #374151;
+    margin-bottom: 1em;
+  }
+
+  @media (max-width: 640px) {
+    .container-box {
+      padding: 0 1em;
     }
-    img{
-        max-width: 100%;
+
+    .question-card,
+    .comment-box {
+      width: 100%;
+      padding: 1.5em;
     }
-}
+
+    .tags {
+      font-size: 0.7rem;
+    }
+  }
 </style>
 
-<body>
+<div class="container-box">
+  <!-- MAIN POST -->
+  <section class="question-card">
+    <span class="author_name">
+      By <a href="{% url 'user-profile' post.owner.id %}">{{ post.owner }}</a>
+    </span>
 
-    <div class="container-box">
-        <section class="question-card">
-            <span class="author_name">By <a href="#">{{post.owner}}</a></a></span>
-            <article class="question-section">
-                <span class="question-title"><h2>{{post.title}}</h2></span>
-                <span class="question-detail">{{post.discription}}</span>
-            </article>
+    <article class="question-section">
+      <h2>{{ post.title }}</h2>
+      <div class="question-detail">{{ post.discription }}</div>
+    </article>
 
-        <article class="details">
-            <div class="discussion_details">{{post.body | safe }}</div>
-        </article>
+    <div class="details discussion_details">{{ post.body | safe }}</div>
 
-            <section class="tag-section">
-                {% for tag in post.tags.all %}
-                    <span class="tags">{{tag}}</span>
-                {% endfor %}
-            </section>
-        </section>
-
-    {% if request.user.is_authenticated %}
-    
-    <span class="answer-prompt"><h1>Add your response here</h1></span>
-        <form action="{% url 'single-discussion' post.id %}" method="post">
-            {% csrf_token %}
-            {{form.as_p}}
-            <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
-        </form>
-    {% else %}
-        <a href="{% url 'login' %}?next={{request.path}}" class="user-project-link-tag">You need to login to add a review</a>
-    {% endif %}
-
-    <span class="answer-amount">There's {{post.total_vote}} comment{{post.vote_total|pluralize:"s"}} in the post </span>
-
-    {% for response in post.discreview_set.all %}
-    <div class="comment-container">
-    <section class="comment-box">
-        <span class="user-info">
-            <img  class = "user-img"src="{{response.owner.profile_image.url}}" alt="">
-            <span class="author_name">By <a href="{% url 'user-profile' response.owner.id %}"> {{response.owner.name}}</a></a></span>
-        </span>
-        <div class="answer-content">
-            <div class="discussion_details">{{response.body}}</div>
-        </div>
+    <section class="tag-section">
+      {% for tag in post.tags.all %}
+      <span class="tags">{{ tag }}</span>
+      {% endfor %}
     </section>
-</div>
-{% endfor %}
+  </section>
+
+  <!-- RESPONSE FORM -->
+  {% if request.user.is_authenticated %}
+  <div class="answer-prompt">
+    <h1>Add your response</h1>
+  </div>
+  <form action="{% url 'single-discussion' post.id %}" method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <input class="btn my-md" type="submit" value="Submit Review" />
+  </form>
+  {% else %}
+  <a href="{% url 'login' %}?next={{ request.path }}" class="btn"
+    >Login to comment</a
+  >
+  {% endif %}
+
+  <!-- COMMENT COUNT -->
+  <p class="answer-amount">
+    {{ post.total_vote }} comment{{ post.total_vote|pluralize:"s" }} in this
+    discussion
+  </p>
+
+  <!-- USER RESPONSES -->
+  {% for response in post.discreview_set.all %}
+  <section class="comment-box">
+    <div class="user-info">
+      <img
+        class="user-img"
+        src="{{ response.owner.profile_image.url }}"
+        alt="User avatar"
+      />
+      <span class="author_name">
+        By
+        <a href="{% url 'user-profile' response.owner.id %}"
+          >{{ response.owner.name }}</a
+        >
+      </span>
     </div>
-</body>
+
+    <div class="answer-content discussion_details">{{ response.body }}</div>
+  </section>
+  {% endfor %}
+</div>
 {% endblock content %}

@@ -3,48 +3,118 @@
 {% block content %}
 
 <style>
-    body{
+    /* Global body styling */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f7fb; /* Soft light background */
+        display: block;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Form container styling */
+    .form-container {
+        background-color: #ffffff; /* White background for the form */
+        margin: 5% 15%;
+        padding: 2em 5em;
+        border: 2px solid #007bff; /* Blue border for the form */
+        border-radius: 16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Label styling */
+    .form__field label {
+        font-size: 1.1em;
+        color: #333;
+        margin-bottom: 8px;
         display: block;
     }
-    input[type=text],textarea,django-ckeditor-widget {
-        margin: 0 0;
+
+    /* Input and textarea styles */
+    input[type=text],
+    textarea,
+    .django-ckeditor-widget {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1em;
+        background-color: #f4f7fb; /* Light background for inputs */
     }
-    textarea,text{
-        width: 50%;
+
+    /* Textarea specific styling */
+    textarea {
+        height: 150px;
     }
-    .form-container{
-        background-color: #f88b4380;
-        margin: 5% 15% 5% 15%;
-        padding: 2em 5em 2em 5em;
-        border: 2px solid rgba(230, 141, 24, 0.212);
-        overflow: hidden;
-        border-radius: 16px;
+
+    /* Submit button styling */
+    input[type=submit] {
+        padding: 10px 20px;
+        background-color: #007bff; /* Blue button */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1em;
+        transition: background-color 0.3s ease;
     }
-    input[type=submit]{
-        padding: 8px 16px;
+
+    /* Submit button hover effect */
+    input[type=submit]:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    /* Form field styling */
+    .form__field {
+        margin-bottom: 20px;
+    }
+
+    /* Center the form on the page */
+    center {
+        display: block;
+    }
+
+    /* Media queries for responsiveness */
+    @media (max-width: 768px) {
+        .form-container {
+            margin: 5% 5%;
+            padding: 2em;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            padding: 12px;
+        }
+
+        textarea {
+            width: 100%;
+        }
     }
 </style>
 
 <div class="form-container">
-<center><form action="" method = "POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% comment %} {{form.as_p}} {% endcomment %}
+    <center>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% comment %} {{form.as_p}} {% endcomment %}
 
-    {% for field in form %}
-        <div class = "form__field">
-            <label for = "forminput#text">{{field.label}}</label>
-            {{form.media}}
-            {{field}}
-        </div>
-    {% endfor %}
+            {% for field in form %}
+                <div class="form__field">
+                    <label for="forminput#text">{{field.label}}</label>
+                    {{form.media}}
+                    {{field}}
+                </div>
+            {% endfor %}
 
-    <div class = "form__field">
-        <label for = "forminput#text">Tags</label>
-        <textarea class = "input" name = "newtags" placeholder = "Add new tags here..."></textarea>
-    </div>
+            <div class="form__field">
+                <label for="forminput#text">Tags</label>
+                <textarea class="input" name="newtags" placeholder="Add new tags here..."></textarea>
+            </div>
 
-    <input type="submit">
-</form>
-</center>
+            <input type="submit" value="Submit">
+        </form>
+    </center>
 </div>
+
 {% endblock content %}
