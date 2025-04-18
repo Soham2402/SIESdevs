@@ -3,48 +3,104 @@
 {% block content %}
 
 <style>
-    body{
+    body {
+        background-color: #f0f4f8;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .form-container {
+        background-color: #ffffff;
+        margin: 5% auto;
+        width: 60%;
+        padding: 3em 4em;
+        border: 1px solid #d0dfe8;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-container h2 {
+        color: #1e3a8a;
+        margin-bottom: 1em;
+    }
+
+    .form__field {
+        margin-bottom: 1.5em;
+    }
+
+    label {
         display: block;
+        margin-bottom: 0.5em;
+        font-weight: 600;
+        color: #1e40af;
     }
-    input[type=text],textarea,django-ckeditor-widget {
-        margin: 0 0;
+
+    input[type="text"],
+    textarea,
+    input[type="email"],
+    input[type="file"],
+    select {
+        width: 100%;
+        padding: 0.75em;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 1em;
+        transition: border-color 0.3s ease;
     }
-    textarea,text{
-        width: 50%;
+
+    input[type="text"]:focus,
+    textarea:focus,
+    select:focus {
+        border-color: #3b82f6;
+        outline: none;
     }
-    .form-container{
-        background-color: #f88b4380;
-        margin: 5% 15% 5% 15%;
-        padding: 2em 5em 2em 5em;
-        border: 2px solid rgba(230, 141, 24, 0.212);
-        overflow: hidden;
-        border-radius: 16px;
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
     }
-    input[type=submit]{
-        padding: 8px 16px;
+
+    input[type="submit"] {
+        background-color: #3b82f6;
+        color: white;
+        padding: 0.75em 1.5em;
+        border: none;
+        border-radius: 6px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #2563eb;
+    }
+
+    .input {
+        font-family: inherit;
     }
 </style>
 
 <div class="form-container">
-<center>
-<form action="" method = "POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% comment %} {{form.as_p}} {% endcomment %}
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
 
-    {% for field in form %}
-        <div class = "form__field">
-            <label for = "forminput#text">{{field.label}}</label>
-            {{field}}
+        <h2>Submit Your Entry</h2>
+
+        {% for field in form %}
+            <div class="form__field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+            </div>
+        {% endfor %}
+
+        <div class="form__field">
+            <label for="newtags">Tags</label>
+            <textarea class="input" name="newtags" placeholder="Add new tags here..."></textarea>
         </div>
-    {% endfor %}
 
-    <div class = "form__field">
-        <label for = "forminput#text">Tags</label>
-        <textarea class = "input" name = "newtags" placeholder = "Add new tags here..."></textarea>
-    </div>
-
-    <input type="submit">
-</form>
-</center>
+        <input type="submit" value="Submit">
+    </form>
 </div>
+
 {% endblock content %}
