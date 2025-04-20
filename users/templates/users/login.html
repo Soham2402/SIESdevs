@@ -1,55 +1,150 @@
 {% extends 'base.html' %}
-
-{%load static%}
-
-
-
+{% load static %}
 
 {% block content %}
+<style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #d0e7ff, #f0f7ff);
+      color: #2c3e50;
+    }
+  
+    .login-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 1rem;
+    }
+  
+    .login-box {
+      background: white;
+      padding: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
+      width: 100%;
+      max-width: 420px;
+    }
+  
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+  
+    .login-title {
+      font-size: 2rem;
+      color: #007bff;
+      margin-bottom: 0.25rem;
+    }
+  
+    .login-subtitle {
+      font-size: 0.95rem;
+      color: #555;
+    }
+  
+    .login-form {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .login-field {
+      margin-bottom: 1.5rem;
+    }
+  
+    .login-field label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+  
+    .login-field input {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: border 0.2s ease;
+    }
+  
+    .login-field input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+    }
+  
+    .login-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+  
+    .login-button {
+      background: #007bff;
+      color: white;
+      font-weight: 600;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+  
+    .login-button:hover {
+      background: #0056b3;
+    }
+  
+    .login-link {
+      font-size: 0.9rem;
+      color: #007bff;
+      text-decoration: none;
+    }
+  
+    .login-link:hover {
+      text-decoration: underline;
+    }
+  
+    @media screen and (max-width: 480px) {
+      .login-box {
+        padding: 2rem;
+      }
+  
+      .login-title {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+  
+<main class="login-wrapper">
+  <section class="login-box">
+    <header class="login-header">
+      <h2 class="login-title">Welcome Back</h2>
+      <p class="login-subtitle">Log in to your developer account</p>
+    </header>
 
+    <form method="POST" class="login-form">
+      {% csrf_token %}
 
-    <!-- <form action="" method="post">
+      <div class="login-field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="Username" placeholder="Enter your username" required>
+      </div>
 
-        {% csrf_token %}
-        <input type="text" name="Username" placeholder="Username">
-        <input type="password" name="Password" placeholder="Password">
-        <input type="submit" name="Login" placeholder="Login">
-        <small><a href="{%url 'reset_password'%}">Forgot password?</a></small>
+      <div class="login-field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="Password" placeholder="••••••••" required>
+      </div>
 
-    </form> -->
-    <main background="{% static 'images/pattern.jpg' %}">
-    <div class="auth">
-        <div class="card">
-            <div class="auth__header text-center">
-                    <img src="{% static 'images/sieslogo.png' %}" alt="icon"  width="150" />
-                <h3>Account Login</h3>
-                <p>Hello Developer, Welcome Back!</p>
-            </div>
-    
-            <form action="" method="POST" class="form auth__form">
-                {% csrf_token %}
-                <input type="hidden" name="" value="">
-    
-                <!-- Input:Username -->
-                <div class="form__field">
-                    <label for="formInput#text">Username: </label>
-                    <input class="input input--text" id="formInput#text" type="text" name="Username" placeholder="Enter your username..." />
-                </div>
-    
-                <!-- Input:Password -->
-                <div class="form__field">
-                    <label for="formInput#password">Password: </label>
-                    <input class="input input--password" id="formInput#passowrd" type="password" name="Password" placeholder="••••••••" />
-                </div>
-    
-                <div class="auth__actions">
-                    <input class="btn btn--sub btn--lg" type="submit" name="Login" value="Log In" />
-                    <a href="{%url 'reset_password'%}">Forget Password?</a>
-                </div>
-            </form>
-        </div>
-    </div>
-    </main>
-{% endblock content %}
-
-
+      <div class="login-actions">
+        <button type="submit" class="login-button">Log In</button>
+        <a href="{% url 'reset_password' %}" class="login-link">Forgot Password?</a>
+      </div>
+    </form>
+  </section>
+</main>
+{% endblock %}

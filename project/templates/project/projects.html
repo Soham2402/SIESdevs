@@ -1,80 +1,155 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
 
-{% block content %}
-<!-- <style>
+<style>
+  /* === BLUE THEME === */
+  .hero-section {
+    padding: 3em 0;
+    background: linear-gradient(145deg, #eaf6ff, #d7ebff);
+    text-align: center;
+  }
 
-.project-container{
-    margin-top: 50px;
+  .hero-section__box h2 {
+    font-size: 2.3em;
+    margin-bottom: 0.2em;
+    color: #002244;
+  }
+
+  .hero-section__box span {
+    color: #1e90ff;
+    font-weight: 600;
+  }
+
+  .form__field {
+    margin: 1.5em auto;
     display: flex;
-    justify-content: end;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 50px;
-}
-.project-card{
+    justify-content: center;
+    max-width: 500px;
+  }
+
+  .input--text {
+    flex: 1;
+    padding: 10px 15px;
+    font-size: 1em;
+    border: 1px solid #1e90ff;
+    border-radius: 8px 0 0 8px;
+  }
+
+  .btn--sub {
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 0 8px 8px 0;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .project-section {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2em;
+    padding: 3em 5%;
+    background-color: #f3f9ff;
+  }
+
+  .project-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+    padding: 1em;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     max-width: 300px;
-}
-.project-card h2{
-    font-size:20px;
-    color:red;
-}
+    margin: 0 auto;
+  }
+
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 16px rgba(30, 144, 255, 0.2);
+  }
+
+  .projects-img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .project-title {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-top: 1em;
+    color: #1e3a5f;
+  }
+
+  .project-auth {
+    font-size: 0.95em;
+    color: #555;
+    margin-top: 0.4em;
+  }
+
+  .vote {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #1e90ff;
+    margin-top: 0.8em;
+  }
+
+  .undecor-link {
+    text-decoration: none;
+  }
 </style>
-<form action="{% url 'project' %}" method="get">
-    <input type="search" name="search_query" placeholder = "Enter name of project" value = '{{search_query}}'>
-    <input type="submit" value="submit">
-</form>
-
-<div class="project-container">
- {%for project in projectdetails%}
-    <a href="{% url 'projects' project.id%}">
-        <div class="project-card">
-            <img width="300px" src="{{project.featured_image.url}}" alt="">
-            <h1>{{project.title}}</h1>
-            <h2>{{project.owner}}</h2>
-            <p>{{project.discription|slice:"150"}}</p>
-        </div>
-    </a>
-    {%endfor%}
-</div> -->
-
-
-
 
 <section class="hero-section text-center">
-    <div class="container-fluid container--narrow">
-      <div class="hero-section__box">
-        <h2><span>Search student projects</span></h2>
-        <h2></h2>
-      </div>
-
-      <div class="hero-section__search">
-
-        <form id="searchForm" class="form" action="{%url 'project'%}" method="get">
-          <div class="form__field">
-            <input class="input input--text" id="formInput#search" type="text" name="search_query" value="{{search_query}}" placeholder="Search by project name">
-          </div>
-
-          <input class="btn btn--sub btn--lg" type="submit" value="Search">
-        </form>
-
-      </div>
+  <div class="container-fluid container--narrow">
+    <div class="hero-section__box">
+      <h2><span>Search Student Projects</span></h2>
     </div>
-  </section>
 
-<section class="project-section">
-        {%for project in projectdetails%}
-        <a href="{%url 'projects' project.id%}" class="undecor-link">
-            <div class="project-card">
-                <img src="{{project.imageURL}}" alt="" class="projects-img" >
-                <p class="project-title">{{project.title}}</p>
-                <h5 class="project-auth">by {{project.owner}}</h5>
-                <h4 class="vote">{{project.vote_ratio}}% positive feedback</h4>
-            </div>
-        </a>
-        {%endfor%}
+    <div class="hero-section__search">
+      <form
+        id="searchForm"
+        class="form"
+        action="{% url 'project' %}"
+        method="get"
+      >
+        <div class="form__field">
+          <input
+            class="input input--text"
+            id="formInput#search"
+            type="text"
+            name="search_query"
+            value="{{ search_query }}"
+            placeholder="Search by project name"
+          />
+          <input class="btn btn--sub btn--lg" type="submit" value="Search" />
+        </div>
+      </form>
+    </div>
+  </div>
 </section>
 
-{% include "pagination.html" with queryset=projectdetails custom_range=custom_range%}
+<section class="project-section">
+  {% for project in projectdetails %}
+  <a href="{% url 'projects' project.id %}" class="undecor-link">
+    <div class="project-card">
+      <img
+        src="{{ project.imageURL }}"
+        alt="{{ project.title }}"
+        class="projects-img"
+      />
+      <p class="project-title">{{ project.title }}</p>
+      <h5 class="project-auth">by {{ project.owner }}</h5>
+      <h4 class="vote">{{ project.vote_ratio }}% positive feedback</h4>
+    </div>
+  </a>
+  {% endfor %}
+</section>
+{% comment %}
 
+{% include 'pagination.html' with queryset=profiles custom_range=custom_range %} {% endcomment %}
 {% endblock content %}
-

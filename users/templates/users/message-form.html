@@ -1,31 +1,120 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <style>
-    .form-cont{
-        margin: 5% 5%;
+    /* Global Form Styles */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f4f7fb; /* Light background color */
     }
+
+    .form-cont {
+        margin: 5% auto;
+        padding: 30px;
+        background-color: #ffffff; /* White background for the form */
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 600px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #007bff;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    /* Label styles */
+    label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+
+    /* Input/textarea fields */
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        margin-bottom: 20px;
+        transition: border-color 0.3s;
+    }
+
+    /* Input/textarea hover effect */
+    input[type="text"]:hover,
+    input[type="email"]:hover,
+    textarea:hover {
+        border-color: #007bff;
+    }
+
+    /* Button styles */
+    input[type="submit"] {
+        background-color: #007bff; /* Blue background */
+        color: white;
+        padding: 14px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s;
+    }
+
+    /* Button hover effect */
+    input[type="submit"]:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    /* Text area styles */
+    textarea {
+        height: 150px;
+        resize: vertical;
+    }
+
+    /* Spacing for form fields */
+    .form-cont br {
+        display: block;
+        margin-bottom: 10px;
+    }
+
 </style>
 
-<section class = "form-cont">
-<form action="" method="POST">
-    {% csrf_token %}
-    {% if request.user.is_authenticated == False %}
-      {{form.name.label}}
-      {{form.name}}
-      <br>
-      {{form.email.label}}
-      {{form.email}}
-      <br>
-    {% endif %}
-        {{form.subject.label}}
-        {{form.subject}}
-        <br>
-        {{form.body.label}}
-        {{form.body}}
-    <input type="submit" value="Send!">
-</form>
+<section class="form-cont">
+    <h2>Contact User</h2>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {% if request.user.is_authenticated == False %}
+            <div class="form-group">
+                <label for="name">{{ form.name.label }}</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label for="email">{{ form.email.label }}</label>
+                {{ form.email }}
+            </div>
+        {% endif %}
+        
+        <div class="form-group">
+            <label for="subject">{{ form.subject.label }}</label>
+            {{ form.subject }}
+        </div>
+        
+        <div class="form-group">
+            <label for="body">{{ form.body.label }}</label>
+            {{ form.body }}
+        </div>
+        
+        <div class="form-group">
+            <input type="submit" value="Send!">
+        </div>
+    </form>
 </section>
 
-{% endblock  %}
+{% endblock %}

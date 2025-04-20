@@ -1,108 +1,220 @@
-{% extends 'base.html' %}
-
-{% block content %}
-
-
+{% extends 'base.html' %} {% block content %}
 <style>
+  .project-wrapper {
+    max-width: 1000px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+  }
 
+  .project-links {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .project-link {
+    background-color: #e0f2fe;
+    color: #2563eb;
+    font-weight: 500;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: background-color 0.2s ease;
+  }
+
+  .project-link:hover {
+    background-color: #dbeafe;
+  }
+
+  .project-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+  }
+
+  .project-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-meta {
+    margin-bottom: 2rem;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .tag {
+    background: #f0f9ff;
+    color: #2563eb;
+    padding: 0.4rem 1rem;
+    border-radius: 5rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .project-description {
+    margin-top: 2rem;
+  }
+
+  .project-description h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: #2d2d39;
+  }
+
+  .reviews {
+    margin-top: 4rem;
+  }
+
+  .reviews h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .review-card {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .review-img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .review-content {
+    flex: 1;
+  }
+
+  .reviewer-name {
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    font-size: 1.2rem;
+  }
+
+  .review-body {
+    font-size: 1.1rem;
+    color: #374151;
+  }
+
+  .prompt,
+  .vote {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  .review-form {
+    margin: 2rem 0;
+  }
 </style>
 
-<div class="project-parent">
-    <div class="canvas">
-        <section class="left-side">
+<div class="project-wrapper">
+  <!-- Project Links -->
+  <div class="project-links">
+    {% if projectObj.demo_link %}
+    <a href="{{ projectObj.demo_link }}" class="project-link" target="_blank"
+      >🔗 Demo</a
+    >
+    {% endif %} {% if projectObj.source_link %}
+    <a href="{{ projectObj.source_link }}" class="project-link" target="_blank"
+      >💻 Source Code</a
+    >
+    {% endif %}
+  </div>
 
-          <h1>Links</h1>
-        {% if projectObj.source_link %}
-            <div><a href="{{ projectObj.demo_link }}" class="user-project-link-tag">Demo Link</a></div>
-        {% endif %}
-        {% if projectObj.demo_link %}
-            <div><a href="{{ projectObj.source_link }}" class="user-project-link-tag">Source Code</a></div>
-            {% endif %}
-        </section>
- 
-      
+  <!-- Project Info -->
+  <h1 class="project-title">{{ projectObj.title }}</h1>
+  <div class="project-meta">
+    <p>
+      <a
+        href="{% url 'user-profile' projectObj.owner.id %}"
+        class="user-project-link-tag"
+        >By {{ projectObj.owner.name }}</a
+      >
+    </p>
+  </div>
+  <img
+    src="{{ projectObj.imageURL }}"
+    alt="{{ projectObj.title }}"
+    class="project-img"
+  />
 
-        <section class="right-side">
-            <h1>{{projectObj.title}}</h1>
-            <img src="{{projectObj.imageURL}}" alt="" class="project-img">
-            <p> <a href="{% url 'user-profile' projectObj.owner.id %}" class="user-project-link-tag">By {{projectObj.owner.name}}</a> </p>
-            <section class="technologies">
-                <h1>Technologies</h1>
-                {% for tags in projectObj.tags.all %}  
-                <span class="tag">
-                    <span class= "skill-tag">{{tags}}</span>
-                </span>
-                {% endfor %}    
-            </section>
-            <article class="discription"> 
-                <h1>Discription</h1>
-                <p>{{projectObj.discription}}</p>
-            </article>
-        </section>
-    </div>
+  <!-- Technologies -->
+  <div class="tag-list">
+    {% for tag in projectObj.tags.all %}
+    <span class="tag">{{ tag }}</span>
+    {% endfor %}
+  </div>
 
-    <section class="reviews">
-        <h2>Reviews</h2>
-         <h4 class="vote">{{projectObj.vote_ratio}}% positive feedback ({{projectObj.total_vote}} Vote{{project.vote_total|pluralize:"s"}})</h4>
-        {% if request.user.profile.id in projectObj.UserId %}
-            <h4 class="prompt">You have already reviewed this work</h4>
-    
-        {% elif request.user.profile.id == projectObj.owner.id %}
-            <h4 class="prompt">Authors cannot review their own work</h4>
-    
-        {% elif request.user.is_authenticated %}
-            <form action="{% url 'projects' projectObj.id %}" method="post">
-                {% csrf_token %}
-                {{form.as_p}}
-                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
-            </form>
-        {% else %}
-            <a href="{% url 'login' %}?next={{request.path}}" class="user-project-link-tag">You need to login to add a review</a>
-        {% endif %}
-            {% for review in projectObj.review_set.all %}
-            <div class="comments">
-                <a href="{% url 'user-profile' projectObj.owner.id %}" class="undecor-link">
-                    <img src="{{review.owner.profile_image.url }}" alt="" class="review-img">
-                    <span class="reviewer-name">{{review.owner.name}}:</span>
-                </a>
-                <p class="review-body">{{review.body}}</p>
-            </div>
-        {% endfor %}
-    </section>
+  <!-- Description -->
+  <section class="project-description">
+    <h2>Description</h2>
+    <p>{{ projectObj.discription }}</p>
+  </section>
 
-
-</div>
-
-<!-- <div class="project-disc">
-    <img class = "project-img" src="{{projectObj.featured_image.url}}" alt="">
-    <h1>{{projectObj.title}}</h1>
-    <p>{{projectObj.discription}}</p>
-</div>
-
-<section class="reviews">
+  <!-- Reviews Section -->
+  <section class="reviews">
+    <h2>Reviews</h2>
+    <p class="vote">
+      {{ projectObj.vote_ratio }}% positive feedback ({{projectObj.total_vote}}
+      Vote{{project.vote_total|pluralize:"s"}})
+    </p>
 
     {% if request.user.profile.id in projectObj.UserId %}
-        <p>You have already reviewed this work</p>
-
+    <p class="prompt">✅ You have already reviewed this project.</p>
     {% elif request.user.profile.id == projectObj.owner.id %}
-        <p>Authors cannot review their own work</p>
-
+    <p class="prompt">⚠️ You cannot review your own project.</p>
     {% elif request.user.is_authenticated %}
-        <form action="{% url 'projects' projectObj.id %}" method="post">
-            {% csrf_token %}
-            {{form.as_p}}
-            <input type="submit" value="Submit">
-        </form>
+    <form
+      action="{% url 'projects' projectObj.id %}"
+      method="post"
+      class="review-form"
+    >
+      {% csrf_token %} {{ form.as_p }}
+      <input
+        class="btn btn--sub btn--lg my-md"
+        type="submit"
+        value="Submit Review"
+      />
+    </form>
     {% else %}
-        <a href="{% url 'login' %}?next={{request.path}}">You need to login to add a review</a>
+    <a href="{% url 'login' %}?next={{ request.path }}" class="project-link"
+      >🔐 Login to add a review</a
+    >
     {% endif %}
-        {% for review in projectObj.review_set.all %}
-        <div class="comments">
-            <h4>{{review.owner.name}}</h4>
-            <p>{{review.body}}</p>
-        </div>
-    {% endfor %}
-</section> -->
 
-{% endblock content %}
-    
+    <!-- Existing Reviews -->
+    {% for review in projectObj.review_set.all %}
+    <div class="review-card">
+      <img
+        src="{{ review.owner.profile_image.url }}"
+        alt="{{ review.owner.name }}"
+        class="review-img"
+      />
+      <div class="review-content">
+        <p class="reviewer-name">{{ review.owner.name }}</p>
+        <p class="review-body">{{ review.body }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

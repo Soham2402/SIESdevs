@@ -12,7 +12,7 @@ def onCreate(sender, instance,created,  **kwargs):
             username = user.username,
             name = user.first_name,)
 
-        subject = 'Welcome to SIESDevs!'
+        subject = 'Welcome to RJDevs!'
         message = 'This is an automated email'
         send_mail(
             subject,

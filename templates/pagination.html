@@ -1,46 +1,65 @@
 <style>
-a:hover{
-    color:black;
-}
-.pagination{
+  a:hover {
+    color: black;
+  }
+  .pagination {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1em;
-}
-.pag-btn{
-    background-color: hsl(24, 70%, 58%);
-    padding: 6px 12px;
+  }
+  .pag-btn {
+    background-color: #2563eb; /* Blue-600 */
+    padding: 0.5rem 1rem;
     border-radius: 6px;
-    color:white ;
+    color: white;
+    font-weight: 500;
+    font-size: 1rem;
     margin-bottom: 2em;
-}
-.pag-btn-on{
-    background-color: hsl(27, 91%, 34%);
-    padding: 7px 14px;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .pag-btn:hover {
+    background-color: #1d4ed8; /* Blue-700 */
+    cursor: pointer;
+  }
+
+  .pag-btn-on {
+    background-color: #1e40af; /* Blue-800 for active state */
+    padding: 0.55rem 1.1rem;
     border-radius: 6px;
-    color:white;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
     margin-bottom: 2em;
-}
+    border: none;
+  }
 </style>
 
 <div class="pagination">
-
-    {% if queryset.has_previous %}
-        <a href="?page={{queryset.previous_page_number}}" class="pag-btn page-link" data-page ="{{queryset.previous_page_number}}">Prev</a>
-    {% endif %}
-
-    {% for page in custom_range %}
-        {% if page == queryset.number %}
-            <a href="?page={{page}}" class="pag-btn-on page-link" data-page ="{{page}}">{{page}}</a>
-        {%else%}
-            <a href="?page={{page}}" class="pag-btn page-link" data-page ="{{page}}">{{page}}</a>
-        {% endif %}
-    {% endfor %}
-
-    {% if queryset.has_next %}
-        <a href="?page={{queryset.next_page_number}}" class="pag-btn page-link"  data-page ="{{queryset.next_page_number}}">Next</a>
-    {% endif %}
-
+  {% if queryset.has_previous %}
+  <a
+    href="?page={{queryset.previous_page_number}}"
+    class="pag-btn page-link"
+    data-page="{{queryset.previous_page_number}}"
+    >Prev</a
+  >
+  {% endif %} {% for page in custom_range %} {% if page == queryset.number %}
+  <a href="?page={{page}}" class="pag-btn-on page-link" data-page="{{page}}"
+    >{{page}}</a
+  >
+  {%else%}
+  <a href="?page={{page}}" class="pag-btn page-link" data-page="{{page}}"
+    >{{page}}</a
+  >
+  {% endif %} {% endfor %} {% if queryset.has_next %}
+  <a
+    href="?page={{queryset.next_page_number}}"
+    class="pag-btn page-link"
+    data-page="{{queryset.next_page_number}}"
+    >Next</a
+  >
+  {% endif %}
 </div>

@@ -2,52 +2,111 @@
 
 {% block content %}
 <style>
-.box{
+  /* Inbox Wrapper */
+  .inbox-container {
+    width: 90%;
+    max-width: 800px;
+    margin: 4rem auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem 2.5rem;
+    background-color: #f0f4ff;
+  }
+
+  .inbox-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #003973;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .inbox-title span {
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  .message-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .message-item {
     display: flex;
     flex-direction: column;
-    width: 50%;
-    margin: 5% auto 25% auto;
-    background-color: hsl(24, 70%, 58%);
-    border-radius: 12px;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 20px 30px;
-}
-.body{
-    max-width: 75%;
-}
-a{
-  color:black;
-}
-.message__item{
-  font-size: 150%;
-  padding-right: 2em;
-}
-.message{
-  margin-bottom:2em;
-}
+    background-color: #ffffff;
+    border: 1px solid #e0e7ff;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    transition: background 0.2s ease;
+  }
 
+  .message-item:hover {
+    background-color: #e9f3ff;
+  }
+
+  .message-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .message-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+
+  .message-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #222;
+  }
+
+  .message-time {
+    font-size: 0.85rem;
+    color: #666;
+  }
+
+  .message-subject {
+    font-size: 1rem;
+    color: #444;
+    margin-top: 0.3rem;
+  }
+
+  @media (max-width: 600px) {
+    .message-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .message-time {
+      margin-top: 0.3rem;
+    }
+  }
 </style>
 
-
-    <div class="box">
-      <h3 class="inbox__title">New Messages(<span>{{unread}})</span></h3>
-      <ul class="messages"><br>
-        {% for message in requests  %}
-
-          <li class="message">
-          <a href="{% url 'view-message' message.id %}">
-            <span class="message__item">{{message.name}}</span>
-            <span class="message__item">{{message.subject}}</span>
-            <span class="message__item">{{message.created}}</span>
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-  
-
-<!-- Main Section -->
-
-
-{% endblock  %}
+<div class="inbox-container">
+  <h3 class="inbox-title">New Messages (<span>{{ unread }}</span>)</h3>
+  <ul class="message-list">
+    {% for message in requests %}
+      <li class="message-item">
+        <a class="message-link" href="{% url 'view-message' message.id %}">
+          <div class="message-header">
+            <span class="message-name">{{ message.name }}</span>
+            <span class="message-time">{{ message.created }}</span>
+          </div>
+          <div class="message-subject">{{ message.subject }}</div>
+        </a>
+      </li>
+    {% empty %}
+      <li class="message-item">
+        <div class="message-subject">No messages found.</div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

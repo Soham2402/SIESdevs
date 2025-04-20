@@ -2,32 +2,73 @@
 
 {% block content %}
 <style>
-.box{
-    display: flex;
-    flex-direction: column;
-    width: 75%;
-    margin: 15% auto;
-    background-color: hsl(24, 70%, 58%);
-    border-radius: 12px;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 20px 30px;
-}
-.body{
-    max-width: 75%;
+.message-box {
+  width: 90%;
+  max-width: 800px;
+  margin: 10% auto;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: #2b2b2b;
 }
 
+.message-box a {
+  color: #007bff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.message-box a:hover {
+  text-decoration: underline;
+}
+
+.message-sender {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #003973;
+}
+
+.message-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #222;
+  margin-top: 0.5rem;
+}
+
+.message-body {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+@media (max-width: 600px) {
+  .message-box {
+    padding: 2rem;
+    margin: 20% auto;
+  }
+
+  .message-title {
+    font-size: 1.4rem;
+  }
+}
 </style>
-<div class="box">
-    {% if message.sender %} 
-    <a href = {% url 'user-profile' message.sender.id %}>{{message.sender.name}}</a>
-    {% else %}
-    <section>{{message.sender.name}}</section>
-    {% endif %}
-    <section class="title"><b>{{message.subject}}</b></section> 
-    <section class="body">{{message.body}}</section>
-    
+
+<div class="message-box">
+  {% if message.sender %}
+    <div class="message-sender">
+      From: <a href="{% url 'user-profile' message.sender.id %}">{{ message.sender.name }}</a>
+    </div>
+  {% else %}
+    <div class="message-sender">From: Anonymous</div>
+  {% endif %}
+
+  <div class="message-title">{{ message.subject }}</div>
+
+  <div class="message-body">{{ message.body }}</div>
 </div>
-
-
-{% endblock  %}
+{% endblock %}
